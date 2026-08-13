@@ -1,0 +1,141 @@
+/* ============================================================
+   Equipment Costing — fixed height, no scroll
+   ============================================================ */
+
+.equip-page {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.equip-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 40px 40px 40px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.equip-head {
+  margin-bottom: 20px;
+  flex-shrink: 0;
+}
+
+.equip-kicker {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pmi-blue);
+  margin-bottom: 8px;
+}
+
+.equip-title {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin: 0 0 6px;
+  color: var(--label-primary);
+}
+
+.equip-title span {
+  font-weight: 400;
+  color: var(--label-secondary);
+}
+
+.equip-sub {
+  font-size: 15px;
+  color: var(--label-secondary);
+  max-width: 620px;
+  line-height: 1.5;
+}
+
+.equip-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.equip-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 48px 56px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  backdrop-filter: blur(8px);
+}
+
+.equip-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--label-secondary);
+}
+
+.equip-card h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--label-primary);
+}
+
+.equip-card p {
+  font-size: 14px;
+  color: var(--label-secondary);
+  line-height: 1.6;
+  max-width: 460px;
+}
+
+.equip-flow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 6px 0;
+}
+
+.equip-flow-item {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: transparent;
+  font-size: 13px;
+  color: var(--label-primary);
+  font-weight: 500;
+}
+
+.equip-flow-arrow {
+  color: var(--label-tertiary);
+  font-size: 1rem;
+}
+
+.equip-notify-btn {
+  margin-top: 8px;
+  padding: 10px 22px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: transparent;
+  color: var(--label-primary);
+  font-size: 14px;
+  font-weight: 550;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.equip-notify-btn:hover {
+  border-color: var(--pmi-blue);
+  color: var(--pmi-blue);
+}

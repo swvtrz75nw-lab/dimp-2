@@ -1,0 +1,229 @@
+/* Theme variables - override in your app's :root. Reuses the same --fd-*
+   names as FiltersDrawer.css so both files share one theme; safe to import
+   both without duplicate/conflicting variables. */
+:root {
+  --fd-surface: #0d1117;
+  --fd-surface-2: #131d2a;
+  --fd-text-primary: #f5f6fa;
+  --fd-text-secondary: #9c9cae;
+  --fd-muted: #77788a;
+  --fd-gridline: #1e2a40;
+  --fd-border: rgba(100, 130, 200, 0.15);
+  --fd-accent: #22d3ee;
+  --fd-status-critical: #ff6369;
+}
+
+.filter-bar {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.filter-group { display: flex; flex-direction: column; gap: 6px; }
+.filter-group label {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--fd-muted);
+  font-weight: 600;
+}
+
+.segmented {
+  display: inline-flex;
+  gap: 2px;
+  background: var(--fd-gridline);
+  border-radius: 9px;
+  padding: 2px;
+  height: 34px;
+  align-items: center;
+}
+.segmented button {
+  border: none;
+  background: transparent;
+  color: var(--fd-text-secondary);
+  padding: 6px 13px;
+  border-radius: 7px;
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+.segmented button.active {
+  background: var(--fd-surface);
+  color: var(--fd-text-primary);
+  font-weight: 650;
+  box-shadow: 0 1px 2px var(--fd-border);
+}
+.segmented button:hover:not(.active) { color: var(--fd-text-primary); }
+.segmented.primary { background: color-mix(in srgb, var(--fd-accent) 14%, var(--fd-gridline)); }
+.segmented.primary button.active {
+  background: var(--fd-accent);
+  color: #ffffff;
+  box-shadow: 0 1px 10px color-mix(in srgb, var(--fd-accent) 45%, transparent);
+}
+
+select.team-select {
+  border: 1px solid var(--fd-border);
+  background: var(--fd-surface);
+  color: var(--fd-text-primary);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  min-width: 160px;
+  height: 34px;
+}
+
+.reset-link {
+  border: none;
+  background: none;
+  color: var(--fd-text-secondary);
+  font-size: 12.5px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  padding: 0;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+}
+.reset-link:hover { color: var(--fd-text-primary); }
+
+.filters-toggle-btn {
+  border: 1px solid var(--fd-border);
+  background: var(--fd-surface);
+  color: var(--fd-text-primary);
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.filters-toggle-btn:hover { background: var(--fd-gridline); }
+.filters-toggle-btn.open {
+  border-color: color-mix(in srgb, var(--fd-accent) 50%, var(--fd-border));
+  color: var(--fd-accent);
+}
+
+/* ---------- Vendor / Saved filters / Save filter dropdowns ---------- */
+.dropdown-wrap { position: relative; }
+.dropdown-trigger {
+  border: 1px solid var(--fd-border);
+  background: var(--fd-surface);
+  color: var(--fd-text-primary);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  max-width: 220px;
+}
+.dropdown-trigger .truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dropdown-trigger:hover { background: var(--fd-gridline); }
+.dropdown-trigger.open,
+.dropdown-trigger.accent-outline { border-color: color-mix(in srgb, var(--fd-accent) 45%, var(--fd-border)); }
+.dropdown-trigger .caret { font-size: 9px; color: var(--fd-muted); }
+
+.dropdown-panel {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 30;
+  width: 300px;
+  max-height: 380px;
+  overflow-y: auto;
+  background: var(--fd-surface);
+  border: 1px solid var(--fd-border);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+  padding: 12px;
+}
+.dropdown-panel.wide { width: 320px; }
+.dropdown-panel.open { display: block; }
+.dropdown-panel .filters-panel-note { margin-top: 0; }
+
+.filters-panel-note { font-size: 11px; color: var(--fd-muted); margin: -2px 0 10px; line-height: 1.4; }
+
+/* Reused inside the Vendor dropdown panel by <TreeSection> from FiltersDrawer.css;
+   include FiltersDrawer.css alongside this file so .tree/.tree-row/etc. resolve. */
+
+/* ---------- saved views list ---------- */
+.saved-views-list { display: flex; flex-direction: column; gap: 3px; margin-bottom: 8px; }
+.saved-view-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: 7px;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+.saved-view-row:hover { background: var(--fd-gridline); }
+.saved-view-row.active {
+  background: color-mix(in srgb, var(--fd-accent) 12%, transparent);
+  box-shadow: inset 3px 0 0 var(--fd-accent);
+}
+.saved-view-row.active:hover { background: color-mix(in srgb, var(--fd-accent) 18%, transparent); }
+.saved-view-row.active .saved-view-name { color: var(--fd-accent); font-weight: 700; }
+.saved-view-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; color: var(--fd-text-primary); }
+.saved-view-name.delete-confirm { color: var(--fd-status-critical); }
+.saved-view-actions { display: none; gap: 2px; flex: none; }
+.saved-view-row:hover .saved-view-actions { display: flex; }
+.saved-view-actions button {
+  border: none;
+  background: none;
+  color: var(--fd-muted);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 5px;
+  border-radius: 5px;
+}
+.saved-view-actions button:hover { color: var(--fd-text-primary); background: var(--fd-surface-2); }
+.saved-view-actions button.delete-confirm { color: var(--fd-status-critical); }
+.saved-views-empty { font-size: 11.5px; color: var(--fd-muted); padding: 2px 8px 10px; line-height: 1.4; }
+
+.saved-view-rename-input {
+  flex: 1;
+  min-width: 0;
+  padding: 4px 6px;
+  border-radius: 6px;
+  border: 1px solid var(--fd-border);
+  background: var(--fd-surface-2);
+  color: var(--fd-text-primary);
+  font-size: 12.5px;
+}
+
+/* ---------- save-filter form ---------- */
+.save-view-form { display: flex; flex-direction: column; gap: 6px; margin-bottom: 8px; }
+.save-view-form input {
+  padding: 7px 9px;
+  border-radius: 7px;
+  border: 1px solid var(--fd-border);
+  background: var(--fd-surface-2);
+  color: var(--fd-text-primary);
+  font-size: 12.5px;
+}
+.save-view-form-actions { display: flex; gap: 6px; }
+.save-view-form-actions button {
+  flex: 1;
+  border: 1px solid var(--fd-border);
+  border-radius: 7px;
+  padding: 6px 0;
+  font-size: 11.5px;
+  font-weight: 650;
+  cursor: pointer;
+}
+.save-view-form-actions .primary { background: var(--fd-accent); border-color: var(--fd-accent); color: #fff; }
+.save-view-form-actions .primary:hover { opacity: 0.9; }
+.save-view-form-actions .secondary { background: var(--fd-surface-2); color: var(--fd-text-secondary); }
+.save-view-form-actions .secondary:hover { background: var(--fd-gridline); }

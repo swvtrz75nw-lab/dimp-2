@@ -1,0 +1,1231 @@
+/* OnboardingAgentPage.css — Category Onboarding Briefing + Ingestion Step styling */
+
+.onb-page {
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 40px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Sticky header ───────────────────────────────────────── */
+.onb-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--canvas, #0a0e1a);
+  padding: 32px 40px 20px;
+  margin: 0 -40px;
+  margin-bottom: 24px;
+}
+
+/* ─── Top bar ─────────────────────────────────────────────── */
+.onb-topbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.onb-topbar-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pmi-blue);
+}
+
+.onb-topbar-sep {
+  color: var(--label-tertiary);
+  font-size: 12px;
+}
+
+.onb-topbar-meta {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--label-secondary);
+  font-family: var(--font-mono, monospace);
+  letter-spacing: 0.02em;
+}
+
+.onb-page-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--label);
+}
+
+/* ─── Step progress indicator ─────────────────────────────── */
+.onb-step-indicator-wrap {
+  position: absolute;
+  top: 32px;
+  right: 40px;
+}
+
+.onb-step-indicator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--glass-thin-bg);
+  backdrop-filter: var(--glass-blur-thin);
+  -webkit-backdrop-filter: var(--glass-blur-thin);
+  box-shadow: inset 0 0 0 0.5px var(--glass-hairline);
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.onb-step-indicator:hover {
+  background: var(--glass-regular-bg);
+}
+
+.onb-step-chev {
+  color: var(--label-tertiary);
+  transition: transform 0.2s;
+}
+
+.onb-step-chev.open {
+  transform: rotate(180deg);
+}
+
+.onb-step-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.onb-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--fill-tertiary);
+}
+
+.onb-dot.active {
+  background: var(--pmi-blue);
+}
+
+.onb-step-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--label-tertiary);
+}
+
+.onb-step-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--label);
+}
+
+.onb-step-pct {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--pmi-blue);
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--pmi-blue-soft);
+}
+
+/* ─── Steps dropdown panel ────────────────────────────────── */
+.onb-steps-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 59;
+}
+
+.onb-steps-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 60;
+  width: 480px;
+  padding: 20px;
+  border-radius: 16px;
+  background: var(--surface, #1a1f2e);
+  border: 1px solid var(--separator, rgba(255, 255, 255, 0.08));
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.onb-sd-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.onb-sd-kicker {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--label-tertiary);
+}
+
+.onb-sd-collapse {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--label-tertiary);
+  background: var(--fill-tertiary, rgba(255, 255, 255, 0.06));
+  border: none;
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.onb-sd-collapse:hover {
+  background: var(--fill-secondary, rgba(255, 255, 255, 0.1));
+}
+
+.onb-sd-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--label);
+  margin: 0 0 16px;
+}
+
+.onb-sd-progress {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.onb-sd-progress-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--label-secondary);
+}
+
+.onb-sd-progress-pct {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--c-green, #22c55e);
+}
+
+.onb-sd-progress-bar {
+  height: 4px;
+  border-radius: 4px;
+  background: var(--fill-tertiary, rgba(255, 255, 255, 0.06));
+  margin-bottom: 18px;
+  overflow: hidden;
+}
+
+.onb-sd-progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: var(--pmi-blue);
+  transition: width 0.3s;
+}
+
+.onb-sd-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.onb-sd-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  transition: background 0.15s;
+}
+
+.onb-sd-step.active {
+  background: rgba(0, 156, 222, 0.06);
+}
+
+.onb-sd-step-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex: none;
+  background: var(--fill-tertiary, rgba(255, 255, 255, 0.06));
+  color: var(--label-tertiary);
+}
+
+.onb-sd-step-num.active {
+  background: var(--pmi-blue);
+  color: #fff;
+}
+
+.onb-sd-step-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.onb-sd-step-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.onb-sd-step-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--label);
+  margin-bottom: 2px;
+}
+
+.onb-sd-step-desc {
+  font-size: 11px;
+  color: var(--label-tertiary);
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.onb-sd-step-badge {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  flex: none;
+  color: var(--label-tertiary);
+  background: var(--fill-tertiary, rgba(255, 255, 255, 0.06));
+}
+
+.onb-sd-step-badge.active {
+  color: var(--pmi-blue);
+  background: var(--pmi-blue-soft, rgba(0, 156, 222, 0.16));
+}
+
+.onb-sd-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--separator, rgba(255, 255, 255, 0.08));
+  font-size: 11px;
+  color: var(--label-tertiary);
+}
+
+.onb-sd-footer-cat {
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  color: var(--label-secondary);
+}
+
+/* ─── Main briefing card ──────────────────────────────────── */
+.onb-card {
+  background: var(--glass-thin-bg);
+  backdrop-filter: var(--glass-blur-thin);
+  -webkit-backdrop-filter: var(--glass-blur-thin);
+  border-radius: 20px;
+  box-shadow: inset 0 0 0 0.5px var(--glass-hairline), 0 4px 24px rgba(0, 0, 0, 0.12);
+  padding: 36px 40px 28px;
+}
+
+.theme-light-root .onb-card {
+  background: #ffffff;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06), inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+}
+
+/* ─── Badge ───────────────────────────────────────────────── */
+.onb-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--pmi-blue);
+  background: var(--pmi-blue-soft);
+  border: 1px solid rgba(0, 156, 222, 0.2);
+  margin-bottom: 18px;
+}
+
+/* ─── Card content ────────────────────────────────────────── */
+.onb-card-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 10px;
+  color: var(--label);
+}
+
+.onb-card-sub {
+  font-size: 14px;
+  color: var(--label-secondary);
+  line-height: 1.6;
+  max-width: none;
+  margin: 0 0 28px;
+}
+
+/* ─── Two-column layout ───────────────────────────────────── */
+.onb-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 720px) {
+  .onb-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+.onb-col {
+  padding: 22px 24px;
+  border-radius: 14px;
+  background: var(--glass-chrome-bg, rgba(255, 255, 255, 0.04));
+  box-shadow: inset 0 0 0 0.5px var(--separator);
+}
+
+.theme-light-root .onb-col {
+  background: #f8fafc;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+}
+
+.onb-col-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--label-secondary);
+  margin: 0 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.onb-col-num {
+  color: var(--label-tertiary);
+}
+
+/* ─── Left column items ───────────────────────────────────── */
+.onb-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: var(--label-secondary);
+  line-height: 1.55;
+}
+
+.onb-item:last-child {
+  margin-bottom: 0;
+}
+
+.onb-item-icon {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  background: var(--fill-tertiary);
+  color: var(--label-secondary);
+  margin-top: 1px;
+}
+
+.onb-item-label {
+  font-weight: 700;
+  color: var(--label);
+}
+
+.onb-item strong {
+  font-weight: 700;
+  color: var(--label);
+}
+
+/* ─── Right column steps (briefing) ──────────────────────── */
+.onb-step {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--separator);
+}
+
+.onb-step:last-of-type {
+  border-bottom: none;
+}
+
+.onb-col .onb-step-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--label);
+}
+
+.onb-step-time {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--label-tertiary);
+  white-space: nowrap;
+}
+
+.onb-estimate {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--separator);
+  font-size: 12px;
+  color: var(--label-tertiary);
+}
+
+.onb-estimate-icon {
+  color: var(--label-tertiary);
+  display: grid;
+  place-items: center;
+}
+
+.onb-estimate-label {
+  font-weight: 500;
+  color: var(--label-secondary);
+}
+
+.onb-estimate-value {
+  font-weight: 700;
+  color: var(--pmi-blue);
+}
+
+.onb-estimate-goal {
+  font-style: italic;
+  color: var(--label-tertiary);
+}
+
+/* ─── Footer ──────────────────────────────────────────────── */
+.onb-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 24px;
+  border-top: 1px solid var(--separator);
+}
+
+.onb-ready-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--label-tertiary);
+}
+
+.onb-start-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 650;
+  color: #ffffff;
+  background: var(--pmi-blue);
+  box-shadow: 0 4px 16px rgba(0, 156, 222, 0.35), inset 0 0 0 0.5px rgba(255, 255, 255, 0.3);
+  transition: transform var(--dur-fast) var(--ease-spring), filter var(--dur-fast), box-shadow var(--dur-fast);
+  cursor: pointer;
+  border: none;
+}
+
+.onb-start-btn:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 156, 222, 0.45), inset 0 0 0 0.5px rgba(255, 255, 255, 0.3);
+}
+
+.onb-start-btn:active {
+  transform: scale(0.97);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   STEP 1: DATA INGESTION & SCOUT SCANNING
+   ═══════════════════════════════════════════════════════════════ */
+
+.onb-ingestion-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 24px;
+  position: relative;
+  align-items: stretch;
+  flex: 1;
+  padding-bottom: 24px;
+}
+
+@media (max-width: 900px) {
+  .onb-ingestion-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Left: main ingestion card ───────────────────────────── */
+.onb-ingestion-main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.onb-ingestion-card {
+  background: var(--glass-thin-bg);
+  backdrop-filter: var(--glass-blur-thin);
+  -webkit-backdrop-filter: var(--glass-blur-thin);
+  border-radius: 20px;
+  box-shadow: inset 0 0 0 0.5px var(--glass-hairline), 0 4px 24px rgba(0, 0, 0, 0.12);
+  padding: 32px 36px 36px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.theme-light-root .onb-ingestion-card {
+  background: #ffffff;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06), inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+}
+
+.onb-ing-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  margin: 0 0 8px;
+  color: var(--label);
+}
+
+.onb-ing-sub {
+  font-size: 14px;
+  color: var(--label-secondary);
+  line-height: 1.6;
+  margin: 0 0 24px;
+}
+
+/* ─── Section labels ──────────────────────────────────────── */
+.onb-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--label-tertiary);
+  margin-bottom: 12px;
+}
+
+.onb-section-label--accent {
+  color: var(--pmi-blue);
+}
+
+/* ─── Category dropdown selector ─────────────────────────── */
+.onb-category-select {
+  position: relative;
+  margin-bottom: 28px;
+}
+
+.onb-category-dropdown {
+  width: 100%;
+  padding: 14px 18px;
+  padding-right: 40px;
+  border-radius: 12px;
+  border: 1px solid var(--separator, rgba(255, 255, 255, 0.08));
+  background: var(--glass-chrome-bg, rgba(255, 255, 255, 0.03));
+  color: var(--label, #fff);
+  font-size: 14px;
+  font-weight: 500;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  transition: border-color var(--dur-fast);
+}
+
+.onb-category-dropdown:hover {
+  border-color: var(--pmi-blue);
+}
+
+.onb-category-dropdown:focus {
+  outline: none;
+  border-color: var(--pmi-blue);
+  box-shadow: 0 0 0 2px rgba(0, 156, 222, 0.15);
+}
+
+.onb-category-dropdown option {
+  background: var(--surface, #1a1f2e);
+  color: var(--label, #fff);
+}
+
+.onb-category-chevron {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--label-tertiary);
+  pointer-events: none;
+}
+
+/* ─── Category template cards ─────────────────────────────── */
+.onb-cat-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.onb-cat-card {
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: 1px solid var(--separator);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--dur-fast), background var(--dur-fast);
+  min-width: 140px;
+}
+
+.onb-cat-card:hover {
+  border-color: var(--pmi-blue);
+  background: var(--pmi-blue-soft);
+}
+
+.onb-cat-card.selected {
+  border-color: var(--pmi-blue);
+  background: var(--pmi-blue-soft);
+  box-shadow: 0 0 0 1px var(--pmi-blue);
+}
+
+.onb-cat-name {
+  font-size: 13.5px;
+  font-weight: 650;
+  color: var(--label);
+  margin-bottom: 2px;
+}
+
+.onb-cat-files {
+  font-size: 11.5px;
+  color: var(--label-tertiary);
+}
+
+/* ─── Expected documents ──────────────────────────────────── */
+.onb-expected {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 18px;
+  border-radius: 12px;
+  background: var(--glass-chrome-bg, rgba(255, 255, 255, 0.03));
+  box-shadow: inset 0 0 0 0.5px var(--separator);
+  margin-bottom: 28px;
+}
+
+.onb-expected-icon {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--pmi-blue);
+  background: var(--pmi-blue-soft);
+  margin-top: 2px;
+}
+
+.onb-expected-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--label);
+  margin-bottom: 4px;
+}
+
+.onb-expected-desc {
+  font-size: 12.5px;
+  color: var(--label-secondary);
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.onb-expected-file {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--label-secondary);
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: var(--fill-tertiary);
+}
+
+.onb-expected-file .onb-expected-badge {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--pmi-blue);
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 156, 222, 0.3);
+  margin-left: 6px;
+}
+
+/* ─── Drop zone ───────────────────────────────────────────── */
+.onb-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+  border-radius: 14px;
+  border: 2px dashed var(--separator);
+  text-align: center;
+  margin-bottom: 28px;
+  transition: border-color var(--dur-fast), background var(--dur-fast);
+  flex: 1;
+  min-height: 120px;
+}
+
+.onb-dropzone:hover {
+  border-color: var(--pmi-blue);
+  background: rgba(0, 156, 222, 0.04);
+}
+
+.onb-dropzone p {
+  font-size: 14px;
+  color: var(--label-secondary);
+  margin: 10px 0 4px;
+}
+
+.onb-browse-link {
+  color: var(--pmi-blue);
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 14px;
+  padding: 0;
+}
+
+.onb-dropzone-hint {
+  font-size: 11.5px;
+  color: var(--label-tertiary);
+}
+
+/* ─── Active file list ────────────────────────────────────── */
+.onb-file-list {
+  margin-bottom: 24px;
+}
+
+.onb-file-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 156, 222, 0.3);
+  background: rgba(0, 156, 222, 0.05);
+  margin-bottom: 8px;
+}
+
+.onb-file-icon {
+  color: var(--pmi-blue);
+  flex: 0 0 20px;
+  display: grid;
+  place-items: center;
+}
+
+.onb-file-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--label);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.onb-file-size {
+  font-size: 11px;
+  color: var(--label-tertiary);
+  flex: none;
+}
+
+.onb-file-ready {
+  font-size: 11px;
+  font-weight: 600;
+  color: #22c55e;
+  background: none;
+  border: none;
+  cursor: default;
+  padding: 0;
+}
+
+.onb-file-delete {
+  font-size: 11px;
+  font-weight: 600;
+  color: #f87171;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 4px;
+}
+
+.onb-file-delete:hover {
+  opacity: 0.7;
+}
+
+/* ─── Run button ──────────────────────────────────────────── */
+.onb-run-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 24px;
+  border-radius: 14px;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(135deg, #0c1a2e 0%, #1a2744 100%);
+  border: 1px solid var(--separator);
+  cursor: pointer;
+  transition: transform var(--dur-fast) var(--ease-spring), box-shadow var(--dur-fast);
+}
+
+.onb-run-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.onb-run-btn:active {
+  transform: scale(0.98);
+}
+
+/* ─── Right: telemetry panel ──────────────────────────────── */
+.onb-telemetry {
+  display: flex;
+  flex-direction: column;
+}
+
+.onb-telem-card {
+  border-radius: 16px;
+  background: linear-gradient(180deg, #0d1520 0%, #111a28 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.theme-light-root .onb-telem-card {
+  background: linear-gradient(180deg, #1a2332 0%, #0f1620 100%);
+}
+
+.onb-telem-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #22c55e;
+}
+
+.onb-telem-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  flex: none;
+}
+
+.onb-telem-expand {
+  margin-left: auto;
+  color: rgba(255, 255, 255, 0.4);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: grid;
+  place-items: center;
+}
+
+.onb-telem-body {
+  padding: 28px 22px;
+  text-align: center;
+  flex: 1;
+}
+
+.onb-telem-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 16px;
+  color: var(--pmi-blue);
+  background: var(--pmi-blue-soft);
+}
+
+.onb-telem-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 8px;
+}
+
+.onb-telem-desc {
+  font-size: 12.5px;
+  color: rgba(235, 235, 245, 0.55);
+  line-height: 1.55;
+  margin: 0 0 24px;
+}
+
+.onb-telem-status {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  text-align: left;
+  padding: 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: rgba(235, 235, 245, 0.5);
+}
+
+.onb-telem-status-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.onb-telem-status-sub {
+  font-size: 12px;
+  color: rgba(235, 235, 245, 0.45);
+  line-height: 1.5;
+}
+
+.onb-telem-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(235, 235, 245, 0.3);
+}
+
+/* ─── Error banner ─────────────────────────────────────────── */
+.onb-error-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  margin: 0 0 16px;
+  background: rgba(255, 59, 48, 0.12);
+  border: 1px solid rgba(255, 59, 48, 0.3);
+  border-radius: 8px;
+  color: #ff6b6b;
+  font-size: 13px;
+}
+
+.onb-error-banner button {
+  background: none;
+  border: none;
+  color: #ff6b6b;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0 4px;
+}
+
+/* ─── Create category form ─────────────────────────────────── */
+.onb-create-cat-btn {
+  background: none;
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  color: var(--pmi-blue);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: border-color 0.15s;
+}
+
+.onb-create-cat-btn:hover {
+  border-color: var(--pmi-blue);
+}
+
+.onb-new-cat-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.onb-input {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 8px 12px;
+  color: var(--label-primary, #ebebf5);
+  font-size: 13px;
+}
+
+.onb-input:focus {
+  outline: none;
+  border-color: var(--pmi-blue);
+}
+
+.onb-new-cat-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.onb-btn-primary {
+  background: var(--pmi-blue);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.onb-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.onb-btn-secondary {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--label-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ─── File status states ───────────────────────────────────── */
+.onb-file-status {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.onb-file-status--ready {
+  color: #34c759;
+  background: rgba(52, 199, 89, 0.1);
+}
+
+.onb-file-status--uploading {
+  color: var(--pmi-blue);
+  background: rgba(0, 156, 222, 0.1);
+}
+
+.onb-file-status--error {
+  color: #ff3b30;
+  background: rgba(255, 59, 48, 0.1);
+}
+
+.onb-file-empty {
+  font-size: 12px;
+  color: var(--label-tertiary);
+  padding: 16px;
+  text-align: center;
+}
+
+/* ─── Telemetry progress bar ───────────────────────────────── */
+.onb-telem-progress {
+  margin-bottom: 16px;
+}
+
+.onb-telem-progress-bar {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.onb-telem-progress-fill {
+  height: 100%;
+  background: var(--pmi-blue);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.onb-telem-progress-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--label-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.onb-telem-error {
+  font-size: 11px;
+  color: #ff6b6b;
+  margin-top: 6px;
+}
+
+.onb-telem-dot.running {
+  background: var(--pmi-blue);
+  animation: pulse-dot 1.2s infinite;
+}
+
+@keyframes pulse-dot {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* ─── Interview readiness section ──────────────────────────── */
+.onb-telem-interview {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.onb-telem-interview-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #34c759;
+}
+
+.onb-telem-interview-hint {
+  font-size: 11px;
+  color: var(--label-tertiary);
+  margin-top: 4px;
+}

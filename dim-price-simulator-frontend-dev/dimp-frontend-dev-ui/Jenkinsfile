@@ -1,0 +1,358 @@
+@Library("ene-global") _
+
+import groovy.json.JsonBuilder
+import groovy.transform.Field
+import groovy.json.JsonOutput
+
+pipeline {
+    agent none
+
+    environment {
+        REGISTRY_URL = 'art.pmideep.com/dimp-docker-dev'
+        ALL_SERVICES = 'dimp-simulator-ui'
+        IMAGE_VERSION = "${BUILD_NUMBER}"
+        LATEST_TAG = "latest"
+        AWS_REGION = "eu-west-1"
+        ECS_CLUSTER = 'dimp-cluster-backend'
+    }
+
+    parameters {
+        choice(
+            name: 'BUILD_SERVICES',
+            choices: [
+                // 'all',
+                'dimp-simulator-ui'
+            ],
+            description: 'Which services to build'
+        )
+        booleanParam(
+            name: 'PUSH_LATEST',
+            defaultValue: true,
+            description: 'Also tag images as latest'
+        )
+        string(
+            name: 'CUSTOM_TAG',
+            defaultValue: '',
+            description: 'Optional custom tag (e.g., v1.2.0, hotfix-123)'
+        )
+        booleanParam(
+            name: 'FORCE_BUILD',
+            defaultValue: false,
+            description: 'Build all selected services regardless of changes'
+        )
+    }
+
+    stages {
+        stage('Checkout & Setup') {
+            agent any
+            steps {
+                script {
+                    checkout scm
+
+                    def servicesToBuild = []
+                    if (params.BUILD_SERVICES == 'all') {
+                        servicesToBuild = env.ALL_SERVICES.split(',')
+                    } else {
+                        servicesToBuild = [params.BUILD_SERVICES]
+                    }
+                    env.SERVICES_TO_BUILD = servicesToBuild.join(',')
+
+                    echo "🏗️  Building services: ${env.SERVICES_TO_BUILD}"
+                    echo "📦  Registry: ${env.REGISTRY_URL}"
+                    echo "🏷️  Image version: ${env.IMAGE_VERSION}"
+                    echo "📋  Push latest: ${params.PUSH_LATEST}"
+                    echo "⚡  Force build: ${params.FORCE_BUILD}"
+
+                    if (params.CUSTOM_TAG) {
+                        echo "🎯  Custom tag: ${params.CUSTOM_TAG}"
+                    }
+                }
+            }
+        }
+
+        stage('Build dimp-simulator-ui Service') {
+            when {
+                allOf {
+                    expression { env.SERVICES_TO_BUILD.contains('dimp-simulator-ui') }
+                    anyOf {
+                        expression { params.FORCE_BUILD == true }
+                        changeset 'src/**'
+                        changeset 'public/**'
+                        changeset 'docker/**'
+                        changeset 'Dockerfile'
+                        changeset 'package.json'
+                        changeset 'package-lock.json'
+                    }
+                }
+            }
+            agent { kubernetes { yaml podTemplate() } }
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'ARTIFACTORY_NPM_CREDS',
+                        usernameVariable: 'NPM_EMAIL',
+                        passwordVariable: 'NPM_PASSWORD'
+                    )
+                ]) {
+                    script {
+                        env.NPM_EMAIL = "${NPM_EMAIL}"
+                        env.NPM_PASSWORD = "${NPM_PASSWORD}"
+
+                        buildService([
+                            serviceName: 'dimp-simulator-ui',
+                            dockerFile: 'Dockerfile',
+                            imageName: 'dimp-simulator-ui',
+                            servicePort: '6000',
+                            contextDir: '.'
+                        ])
+                    }
+
+                    // Optional ECS rollout
+                    container('aws-cli') {
+                        withCredentials([[
+                            $class: 'AmazonWebServicesCredentialsBinding',
+                             credentialsId: 'aws-credentials-id',
+                             accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                         ]]) {
+                            sh '''
+                                aws ecs update-service --force-new-deployment \
+                                     --service dimp-simulator-ui \
+                                     --cluster ${ECS_CLUSTER} \
+                                     --region ${AWS_REGION}
+                                '''
+                        }
+                     }
+                }
+            }
+        }
+
+        stage('Generate Image Manifest') {
+            agent any
+            steps {
+                script {
+                    def builtImages = []
+                    def imageInfo = [:]
+
+                    env.SERVICES_TO_BUILD.split(',').each { service ->
+                        def baseImage = "${env.REGISTRY_URL}/${service}"
+                        def images = ["${baseImage}:${env.IMAGE_VERSION}"]
+
+                        if (params.PUSH_LATEST) {
+                            images.add("${baseImage}:latest")
+                        }
+                        if (params.CUSTOM_TAG) {
+                            images.add("${baseImage}:${params.CUSTOM_TAG}")
+                        }
+
+                        imageInfo[service] = [
+                            latest : "${baseImage}:${env.IMAGE_VERSION}",
+                            all_tags: images
+                        ]
+                        builtImages.addAll(images)
+                    }
+
+                    def manifest = [
+                        build_info: [
+                            build_number: env.BUILD_NUMBER,
+                            git_commit : env.GIT_COMMIT ?: "unknown",
+                            git_branch : env.GIT_BRANCH ?: "unknown",
+                            timestamp  : new Date().format("yyyy-MM-dd HH:mm:ss 'UTC'"),
+                            registry   : "${env.REGISTRY_URL}",
+                            force_build: params.FORCE_BUILD
+                        ],
+                        services : imageInfo,
+                        all_images: builtImages
+                    ]
+
+                    // ----------------------------------------
+                    // ✔ Safe JSON pretty print for Jenkins sandbox
+                    // ----------------------------------------
+                    def manifestJson = JsonOutput.prettyPrint(JsonOutput.toJson(manifest))
+
+                    // ----------------------------------------
+                    // ✔ Replace toPrettyString()
+                    // ----------------------------------------
+                    writeFile file: 'image-manifest.json', text: manifestJson
+
+                    echo "📋 Image Manifest Generated:"
+
+                    // ----------------------------------------
+                    // ✔ Replace second toPrettyString()
+                    // ----------------------------------------
+                    echo manifestJson
+
+                    archiveArtifacts artifacts: 'image-manifest.json', fingerprint: true, allowEmptyArchive: false
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            script {
+                def builtImages = []
+                env.SERVICES_TO_BUILD.split(',').each { service ->
+                    builtImages.add("${env.REGISTRY_URL}/${service}:${env.IMAGE_VERSION}")
+                    if (params.PUSH_LATEST) {
+                        builtImages.add("${env.REGISTRY_URL}/${service}:latest")
+                    }
+                    if (params.CUSTOM_TAG) {
+                        builtImages.add("${env.REGISTRY_URL}/${service}:${params.CUSTOM_TAG}")
+                    }
+                }
+
+                echo """
+🎉 BUILD SUCCESSFUL! 🎉
+
+Services Built: ${env.SERVICES_TO_BUILD}
+Build Number: ${env.BUILD_NUMBER}
+Registry: ${env.REGISTRY_URL}
+
+📦 Built Images:
+${builtImages.collect { "   • ${it}" }.join('\n')}
+
+🔗 Image manifest archived for downstream deployments.
+"""
+            }
+        }
+
+        failure {
+            script {
+                echo """
+❌ BUILD FAILED! ❌
+
+Services: ${env.SERVICES_TO_BUILD}
+Build Number: ${env.BUILD_NUMBER}
+
+Please check the console logs for detailed error information.
+"""
+            }
+        }
+
+        always {
+            script {
+                echo "🧹 Cleaning up workspace..."
+                node {
+                    deleteDir()
+                }
+            }
+        }
+    }
+}
+
+def buildService(Map config) {
+    container('kaniko') {
+        withCredentials([usernamePassword(
+            credentialsId: 'JFROG',
+            usernameVariable: 'USERNAME',
+            passwordVariable: 'PASSWORD'
+        )]) {
+            sh '''
+              set -euo pipefail
+
+              # Build base64 token and remove any line breaks
+              TOKEN=$(printf "%s" "${USERNAME}:${PASSWORD}" | base64 | tr -d '\\n')
+
+              # Extract registry host (strip namespace)
+              HOST="${REGISTRY_URL%%/*}"
+
+              # Write valid Docker auth JSON
+              printf '{"auths":{"%s":{"auth":"%s"}}}' "$HOST" "$TOKEN" > /kaniko/.docker/config.json
+
+              echo "---- /kaniko/.docker/config.json ----"
+              cat /kaniko/.docker/config.json
+            '''
+        }
+
+        def destinations = [
+            "--destination ${REGISTRY_URL}/${config.imageName}:${IMAGE_VERSION}"
+        ]
+
+        if (params.PUSH_LATEST) {
+            destinations.add("--destination ${REGISTRY_URL}/${config.imageName}:${LATEST_TAG}")
+        }
+
+        if (params.CUSTOM_TAG) {
+            destinations.add("--destination ${REGISTRY_URL}/${config.imageName}:${params.CUSTOM_TAG}")
+        }
+
+        def contextPath = config.contextDir ?: "."
+
+        def buildCommand = '''
+          /kaniko/executor \
+            --dockerfile=''' + config.dockerFile + ''' \
+            --context=''' + contextPath + ''' \
+            --build-arg CACHE_BUSTER=''' + BUILD_NUMBER + ''' \
+            --build-arg NPM_EMAIL=$NPM_EMAIL \
+            --build-arg NPM_PASSWORD=$NPM_PASSWORD \
+            ''' + destinations.join(' \\\n    ') + ''' \
+            --skip-tls-verify-pull \
+            --cache=true \
+            --cache-ttl=24h \
+            --compressed-caching=false \
+            --cleanup
+        '''
+
+        echo "🏗️  Building ${config.serviceName} (Port: ${config.servicePort})"
+        echo "📁  Dockerfile: ${config.dockerFile}"
+        echo "📁  Context: ${contextPath}"
+
+        def result = sh(script: buildCommand, returnStatus: true)
+
+        if (result == 0) {
+            echo "✅ Successfully built and pushed ${config.serviceName}"
+            echo "📦 Images pushed:"
+            destinations.each { dest ->
+                echo "   • ${dest.replace('--destination ', '')}"
+            }
+        } else {
+            error "❌ Failed to build ${config.serviceName}"
+        }
+    }
+}
+
+def podTemplate() {
+    return """
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: core-services-build
+spec:
+  serviceAccountName: jenkins
+  containers:
+    - name: jnlp
+      image: art.pmideep.com/jenkins-tools/cloudbees/cloudbees-core-agent:2.479.3.2
+      resources:
+        requests:
+          cpu: "200m"
+          memory: "1Gi"
+        limits:
+          cpu: "500m"
+          memory: "2Gi"
+    - name: kaniko
+      image: art.pmideep.com/gcr/kaniko-project/executor:debug
+      command: ["/busybox/sh"]
+      tty: true
+      resources:
+        requests:
+          cpu: "1000m"
+          memory: "4Gi"
+        limits:
+          cpu: "2000m"
+          memory: "8Gi"
+      volumeMounts:
+        - name: docker-config
+          mountPath: /kaniko/.docker
+    - name: aws-cli
+      image: amazon/aws-cli
+      command: ["/bin/sh"]
+      tty: true
+  imagePullSecrets:
+    - name: artifactory-dimp-dev
+  volumes:
+    - name: docker-config
+      emptyDir: {}
+"""
+}

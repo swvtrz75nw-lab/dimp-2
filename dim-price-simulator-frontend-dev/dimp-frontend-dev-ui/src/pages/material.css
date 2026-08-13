@@ -1,0 +1,327 @@
+/* material.css — ported verbatim from the standalone Procurement Hub */
+/* ============================================================
+   Material Price (DIM) tab — shares the Inflation shell
+   (.inf-page / .inf-scroll / .inf-layout / .inf-rail / .inf-glass-card)
+   and matches its type scale + colour system. Rising price effect is
+   shown in red (added cost), exactly like the Inflation tab.
+   ============================================================ */
+
+/* base card — same surface + radius as the Inflation impact card */
+.mat-card { border-radius: 22px; padding: 18px 20px; background: var(--grouped-bg-secondary); box-shadow: inset 0 0 0 0.5px var(--separator); }
+.mat-card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.mat-card-title { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-display); font-size: 16.5px; font-weight: 700; letter-spacing: -0.015em; color: var(--label); }
+.mat-card-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--pmi-blue); box-shadow: 0 0 0 3px var(--pmi-blue-soft); }
+.mat-card-meta { font-size: 11.5px; color: var(--label-tertiary); white-space: nowrap; }
+
+/* ============================================================
+   Header KPI strip — sized to the Inflation hero (value 38px, white)
+   ============================================================ */
+.mat-headstrip {
+  display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
+  border-radius: 22px; padding: 18px 22px;
+  background: var(--grouped-bg-secondary); box-shadow: inset 0 0 0 0.5px var(--separator);
+}
+.mat-hs-lead { display: flex; flex-direction: column; gap: 5px; }
+.mat-hs-kicker { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--label-tertiary); }
+.mat-hs-value { font-family: var(--font-display); font-size: 38px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.02; color: var(--label); font-variant-numeric: tabular-nums; }
+.mat-hs-unit { font-size: 18px; font-weight: 700; margin-left: 7px; color: var(--label-secondary); letter-spacing: 0; }
+.mat-hs-divider { width: 1px; align-self: stretch; background: var(--separator); margin: 4px 0; }
+.mat-hs-kpi { display: flex; flex-direction: column; gap: 6px; }
+.mat-hs-k-top { line-height: 1; }
+.mat-hs-count { font-size: 22px; font-weight: 700; color: var(--label); font-variant-numeric: tabular-nums; }
+.mat-hs-k-label { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--label-tertiary); }
+
+/* ============================================================
+   Decomposition + Donut row
+   ============================================================ */
+.mat-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+@media (max-width: 880px) { .mat-duo { grid-template-columns: 1fr; } }
+
+/* vertical bars */
+.mat-bars { display: flex; align-items: flex-end; justify-content: space-around; gap: 18px; height: 210px; padding: 0 6px; }
+.mat-bar-col { display: flex; flex-direction: column; align-items: center; flex: 1; height: 100%; min-width: 0; }
+.mat-bar-val { font-size: 16px; font-weight: 700; color: var(--label); font-variant-numeric: tabular-nums; margin-bottom: 8px; }
+.mat-bar-track { flex: 1; width: 100%; max-width: 80px; display: flex; align-items: flex-end; }
+.mat-bar-fill { width: 100%; border-radius: 10px 10px 0 0; box-shadow: inset 0 1px 0 rgba(255,255,255,0.16); transition: height var(--dur-slow) var(--ease-spring); }
+.mat-bar-label { font-size: 12.5px; font-weight: 600; color: var(--label-secondary); margin-top: 11px; }
+.mat-decomp-note { font-size: 11px; line-height: 1.5; color: var(--label-tertiary); margin: 16px 0 0; text-wrap: pretty; }
+
+/* donut */
+.mat-donut-wrap { display: flex; align-items: center; gap: 24px; padding: 2px 0 6px; }
+@media (max-width: 1180px) and (min-width: 880px) { .mat-donut-wrap { gap: 16px; } }
+.mat-donut { flex: none; }
+.mat-donut-total { font-family: var(--font-display); font-size: 25px; font-weight: 800; fill: var(--label); letter-spacing: -0.02em; }
+.mat-donut-sub { font-size: 11px; font-weight: 600; fill: var(--label-tertiary); letter-spacing: 0.04em; }
+.mat-legend { flex: 1; display: flex; flex-direction: column; gap: 11px; min-width: 0; }
+.mat-legend-row { display: flex; align-items: center; gap: 10px; }
+.mat-legend-dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.mat-legend-name { flex: 1; font-size: 13px; font-weight: 600; color: var(--label); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mat-legend-val { font-size: 13px; font-weight: 700; color: var(--label-secondary); font-variant-numeric: tabular-nums; }
+
+/* ============================================================
+   Pills + inline marks
+   ============================================================ */
+.mat-pct { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.acc-cat-dot { width: 8px; height: 8px; border-radius: 50%; flex: none; display: inline-block; }
+
+.mat-gran { display: inline-flex; align-items: center; font-size: 12px; font-weight: 600; padding: 4px 11px; border-radius: 999px; color: var(--c-teal); box-shadow: inset 0 0 0 1px rgba(48,176,199,0.5); white-space: nowrap; }
+.mat-gran.sup { color: var(--c-purple); box-shadow: inset 0 0 0 1px rgba(191,90,242,0.5); }
+
+.mat-model { display: inline-flex; align-items: center; font-family: var(--font-mono, ui-monospace, monospace); font-size: 11.5px; font-weight: 600; padding: 4px 9px; border-radius: 8px; color: var(--label-secondary); background: var(--fill-tertiary); box-shadow: inset 0 0 0 0.5px var(--separator); }
+.mat-model.draft { color: var(--label-tertiary); }
+
+.mat-status { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700; padding: 4px 12px 4px 10px; border-radius: 999px; white-space: nowrap; }
+.mat-status-dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+.mat-status.ok { color: var(--c-green); background: rgba(48,209,88,0.14); }
+.mat-status.ok .mat-status-dot { background: var(--c-green); }
+.mat-status.warn { color: var(--c-orange); background: rgba(255,159,10,0.14); }
+.mat-status.warn .mat-status-dot { background: var(--c-orange); }
+.mat-status.idle { color: var(--label-secondary); background: var(--fill-tertiary); }
+.mat-status.idle .mat-status-dot { background: var(--label-tertiary); }
+
+.mat-b { font-weight: 700; color: var(--label); }
+.mat-hl { font-weight: 700; color: var(--pmi-blue); }
+
+/* ============================================================
+   Category breakdown table (Categories tab)
+   ============================================================ */
+.mat-bt { border-radius: 20px; overflow: hidden; background: var(--grouped-bg-secondary); box-shadow: inset 0 0 0 0.5px var(--separator); }
+.mat-bt-head, .mat-bt-row {
+  display: grid;
+  grid-template-columns: minmax(140px, 1.3fr) 1fr 0.85fr 1.15fr 0.7fr 1fr 0.7fr;
+  align-items: center; gap: 14px; padding: 14px 20px;
+}
+.mat-bt-head { box-shadow: inset 0 -0.5px 0 var(--separator); }
+.mat-bt-head > span { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--label-tertiary); }
+.mat-bt-row { box-shadow: inset 0 -0.5px 0 var(--separator); transition: background var(--dur-fast); }
+.mat-bt-row:last-child { box-shadow: none; }
+.mat-bt-row:hover { background: var(--fill-quaternary); }
+.mat-bt-cat { display: inline-flex; align-items: center; gap: 9px; font-size: 13.5px; font-weight: 700; color: var(--label); }
+.mat-bt-eff { font-size: 14px; font-weight: 700; color: var(--label); font-variant-numeric: tabular-nums; }
+.mat-bt-imp { font-size: 13px; color: var(--label-secondary); }
+.mat-bt-pdca { font-size: 13px; color: var(--label-secondary); font-variant-numeric: tabular-nums; }
+
+/* ============================================================
+   Key insights accordion — recommendation block (matches trb-rec)
+   ============================================================ */
+.mat-rec { padding: 13px 15px; margin-bottom: 12px; border-radius: 13px; background: var(--pmi-blue-soft); box-shadow: inset 0 0 0 0.5px rgba(10,132,255,0.28); }
+.mat-rec-title { display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700; color: var(--pmi-blue); margin-bottom: 5px; }
+.mat-rec-body { font-size: 13px; line-height: 1.5; color: var(--label); }
+
+/* ============================================================
+   Right rail — categories + key statistics
+   ============================================================ */
+.mat-rail-tag { font-size: 11px; font-weight: 600; color: var(--label-tertiary); }
+.mat-catrail-list { display: flex; flex-direction: column; }
+.mat-catrail-row { padding: 12px 0; position: relative; }
+.mat-catrail-row:not(:last-child)::after { content: ""; position: absolute; left: -14px; right: -14px; bottom: 0; height: 0.5px; background: var(--separator); }
+.mat-catrail-row:first-child { padding-top: 2px; }
+.mat-catrail-row:last-child { padding-bottom: 2px; }
+.mcr-line { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.mcr-name { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 600; color: var(--label); min-width: 0; }
+.mcr-dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+.mcr-eff { font-size: 13px; font-weight: 700; color: var(--label); font-variant-numeric: tabular-nums; flex: none; }
+.mcr-track { height: 5px; border-radius: 3px; background: var(--fill-tertiary); overflow: hidden; margin: 8px 0; }
+.mcr-fill { display: block; height: 100%; border-radius: 3px; }
+.mcr-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.mcr-foot .mat-status { font-size: 11px; padding: 3px 9px 3px 8px; }
+.mcr-foot .mat-pct { font-size: 12px; }
+
+.mat-keystats { display: flex; flex-direction: column; }
+.mat-keystat { display: flex; flex-direction: column; gap: 2px; padding: 11px 0; position: relative; }
+.mat-keystat:not(:last-child)::after { content: ""; position: absolute; left: -14px; right: -14px; bottom: 0; height: 0.5px; background: var(--separator); }
+.mat-keystat:first-child { padding-top: 2px; }
+.mat-keystat:last-child { padding-bottom: 2px; }
+.mks-k { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; color: var(--label-tertiary); }
+.mks-v { font-size: 15.5px; font-weight: 700; color: var(--label); font-variant-numeric: tabular-nums; }
+.mks-sub { font-size: 11.5px; color: var(--label-secondary); }
+
+/* ============================================================
+   Official Result table
+   ============================================================ */
+.mat-ot { border-radius: 20px; overflow: hidden; background: var(--grouped-bg-secondary); box-shadow: inset 0 0 0 0.5px var(--separator); }
+.mat-ot-head, .mat-ot-row {
+  display: grid; grid-template-columns: minmax(130px, 1.2fr) 0.9fr 1fr 1fr 1.1fr 1fr;
+  align-items: center; gap: 14px; padding: 15px 22px;
+}
+.mat-ot-head { box-shadow: inset 0 -0.5px 0 var(--separator); }
+.mat-ot-head > span { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--label-tertiary); }
+.mat-ot-row { box-shadow: inset 0 -0.5px 0 var(--separator); transition: background var(--dur-fast); }
+.mat-ot-row:last-child { box-shadow: none; }
+.mat-ot-row:hover { background: var(--fill-quaternary); }
+.mat-ot-cat { font-size: 14px; font-weight: 700; color: var(--label); }
+.mat-ot-eff { font-size: 14px; font-weight: 600; color: var(--label); font-variant-numeric: tabular-nums; }
+.mat-ot-imp { font-size: 13px; color: var(--label-secondary); }
+
+/* auto-generated summary */
+.mat-summary { margin-top: 18px; border-radius: 20px; padding: 18px 20px; background: var(--pmi-blue-soft); box-shadow: inset 0 0 0 0.5px rgba(10,132,255,0.22); }
+.mat-summary-tag { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--pmi-blue); padding: 6px 12px; border-radius: 999px; box-shadow: inset 0 0 0 1px rgba(10,132,255,0.35); margin-bottom: 13px; }
+.mat-summary-text { font-size: 13.5px; line-height: 1.6; color: var(--label-secondary); margin: 0; text-wrap: pretty; }
+.mat-summary-text .mat-b { color: var(--label); }
+.mat-summary-text .mat-hl { color: var(--pmi-blue); }
+
+@media (prefers-reduced-motion: reduce) {
+  .mat-bar-fill { transition: none !important; }
+}
+
+/* ============================================================
+   Inflation-impact-card adaptations for Material
+   ============================================================ */
+/* compact vertical decomposition chart inside the half-width decomp card */
+.mat-scope .inf-decomp-card .mat-bars { height: 150px; padding: 0 2px; gap: 14px; }
+.mat-scope .inf-decomp-card .mat-bar-val { font-size: 14px; margin-bottom: 6px; }
+.mat-scope .inf-decomp-card .mat-bar-track { max-width: 64px; }
+.mat-scope .inf-decomp-card .mat-bar-label { font-size: 12px; margin-top: 9px; }
+/* roomier label column so category names read fully */
+.mat-scope .inf-decomp-card .idr-label { flex-basis: 104px; }
+
+/* "This cycle at a glance" block on the right of the headrow */
+.mat-glance { display: flex; flex-direction: column; justify-content: center; }
+.mat-glance-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 7px 0; }
+.mat-glance-row + .mat-glance-row { box-shadow: inset 0 0.5px 0 var(--separator); }
+.mgr-k { font-size: 12.5px; color: var(--label-secondary); }
+.mgr-v { font-size: 14px; font-weight: 700; color: var(--label); font-variant-numeric: tabular-nums; }
+.mat-scope .iic-value { color: var(--label); }
+/* the impact card's decomposition note sits under the grid */
+.mat-scope .inf-impact-card .mat-decomp-note { margin-top: 16px; }
+
+
+/* ─── Glance table layout ─────────────────────────────────── */
+.mat-glance-table {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+}
+.mat-glance-table .mat-glance-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  padding: 4px 0;
+  box-shadow: none;
+}
+.mat-glance-table .mat-glance-row + .mat-glance-row {
+  box-shadow: none;
+}
+.mat-glance-table .mat-glance-header span {
+  font-size: 12px;
+  color: var(--label-tertiary);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.mat-glance-table .mat-glance-values span {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--label);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Spend & Price Effect Over Time ──────────────────────── */
+.mat-spend-time {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--separator);
+}
+
+.mat-spend-time-title {
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  color: var(--label-tertiary);
+  margin-bottom: 12px;
+}
+
+.mat-spend-row {
+  display: grid;
+  grid-template-columns: 120px 1fr auto auto auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--separator);
+}
+
+.mat-spend-row:last-of-type {
+  border-bottom: none;
+}
+
+.mat-spend-period {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.mat-spend-period strong {
+  font-size: 14px;
+  font-weight: 650;
+  color: var(--label-primary);
+}
+
+.mat-spend-period span {
+  font-size: 11px;
+  color: var(--label-tertiary);
+}
+
+.mat-spend-bar {
+  height: 10px;
+  background: var(--fill-tertiary);
+  border-radius: 5px;
+  overflow: hidden;
+  min-width: 80px;
+}
+
+.mat-spend-bar-fill {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.4s ease;
+}
+
+.mat-spend-val {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--label-secondary);
+  min-width: 52px;
+}
+
+.mat-spend-eff {
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--label-primary);
+  min-width: 46px;
+}
+
+.mat-spend-pct {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--label-secondary);
+  min-width: 40px;
+}
+
+.mat-spend-footer {
+  font-size: 12.5px;
+  color: var(--label-secondary);
+  margin-top: 10px;
+  font-style: italic;
+}
+
+.mat-spend-footer b {
+  color: var(--label-primary);
+}
+
+
+/* ─── Back button ─────────────────────────────────────────── */
+.mat-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--pmi-blue);
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: var(--fill-tertiary);
+  transition: background var(--dur-fast), opacity var(--dur-fast);
+  margin-right: 12px;
+}
+.mat-back-btn:hover {
+  background: var(--fill-secondary);
+  opacity: 0.9;
+}

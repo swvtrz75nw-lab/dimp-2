@@ -1,0 +1,316 @@
+/* infSpendMechanics.css — Inflation Mechanics & Metric Hierarchy */
+/* 6 KPI boxes in 2 rows of 3, dark card style */
+
+/* ─── Section Container ──────────────────────────────────────────────────────── */
+.spm-section {
+  border-radius: 22px;
+  padding: 28px 20px 24px;
+  background: var(--grouped-bg-secondary);
+  box-shadow: inset 0 0 0 0.5px var(--separator);
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* ─── Header ─────────────────────────────────────────────────────────────────── */
+.spm-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.spm-header-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.spm-kicker {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--pmi-blue);
+  margin-bottom: 6px;
+}
+.spm-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--label);
+  margin: 0 0 6px;
+}
+.spm-subtitle {
+  font-size: 13px;
+  color: var(--label-secondary);
+  margin: 0;
+  max-width: 560px;
+}
+.spm-header-right {
+  flex: none;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   YEAR TABS (top-right of header)
+   ═══════════════════════════════════════════════════════════════════════════════ */
+.spm-year-tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--separator);
+  overflow: hidden;
+}
+.spm-year-tab {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--label-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, font-weight 0.15s;
+  font-variant-numeric: tabular-nums;
+  position: relative;
+}
+.spm-year-tab:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 25%;
+  height: 50%;
+  width: 1px;
+  background: var(--separator);
+}
+.spm-year-tab:hover {
+  color: var(--label);
+  background: rgba(255, 255, 255, 0.06);
+}
+.spm-year-tab.active {
+  color: #fff;
+  font-weight: 800;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.08);
+}
+.spm-year-tab.active::after {
+  display: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   KPI GRID — 2 rows of 3 boxes
+   ═══════════════════════════════════════════════════════════════════════════════ */
+.spm-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+@media (max-width: 1100px) {
+  .spm-kpi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .spm-kpi-grid { grid-template-columns: 1fr; }
+}
+
+/* ─── Individual KPI Box ─────────────────────────────────────────────────────── */
+.spm-kpi-box {
+  padding: 20px 22px 18px;
+  border-radius: 16px;
+  border: 1px solid var(--separator);
+  background: var(--fill-quaternary, rgba(255, 255, 255, 0.02));
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: border-color 0.2s ease;
+}
+.spm-kpi-box:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Highlighted box (Spend Run-Rate Outlook) — cyan glow */
+.spm-kpi-box--highlight {
+  border-color: rgba(6, 182, 212, 0.5);
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.1), inset 0 0 0 1px rgba(6, 182, 212, 0.25);
+}
+.spm-kpi-box--highlight:hover {
+  border-color: rgba(6, 182, 212, 0.7);
+}
+
+/* ─── Box Header (title + tooltip) ───────────────────────────────────────────── */
+.spm-kpi-box-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+.spm-kpi-box-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--label-secondary);
+}
+
+/* ─── Box Content ────────────────────────────────────────────────────────────── */
+.spm-kpi-box-subtitle {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--label-tertiary);
+  margin-bottom: 6px;
+}
+
+.spm-kpi-box-value {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--label);
+  line-height: 1.1;
+}
+
+.spm-kpi-box-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.spm-kpi-box-pct {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--label-secondary);
+}
+
+/* Value color variants */
+.spm-kpi-val-red { color: #ef4444; }
+.spm-kpi-val-cyan { color: #06b6d4; }
+.spm-kpi-val-green { color: #10b981; }
+.spm-kpi-val-teal { color: #06b6d4; }
+
+/* ─── Range Bar ──────────────────────────────────────────────────────────────── */
+.spm-kpi-range-bar {
+  position: relative;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--fill-tertiary);
+  margin-top: 12px;
+  overflow: visible;
+}
+.spm-kpi-range-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #10b981, #f59e0b, #ef4444);
+}
+
+.spm-kpi-range-dot {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--pmi-blue);
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 2px rgba(0, 156, 222, 0.3), 0 1px 4px rgba(0, 0, 0, 0.4);
+  transition: left 0.4s var(--ease-spring, cubic-bezier(0.175, 0.885, 0.32, 1.275));
+}
+
+.spm-kpi-box-range {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--label-tertiary);
+  font-variant-numeric: tabular-nums;
+  margin-top: 6px;
+}
+
+/* ─── Tooltip Icon ────────────────────────────────────────────────────────────── */
+.spm-tooltip-wrap {
+  position: relative;
+  display: inline-flex;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.spm-tooltip-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--separator);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--label-tertiary);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.spm-tooltip-icon:hover {
+  border-color: var(--pmi-blue);
+  color: var(--pmi-blue);
+}
+.spm-tooltip-popup {
+  position: fixed;
+  width: 280px;
+  padding: 16px 18px;
+  border-radius: 12px;
+  background: var(--grouped-bg-secondary, #1a1f2e);
+  border: 1px solid var(--separator);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  pointer-events: none;
+}
+.spm-tooltip-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--pmi-blue);
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--separator);
+}
+.spm-tooltip-body {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--label-secondary);
+}
+
+/* ─── Empty state ────────────────────────────────────────────────────────────── */
+.spm-nodata-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+  border-radius: 14px;
+  border: 1.5px dashed rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.015);
+  margin-top: 16px;
+}
+.spm-nodata-icon {
+  color: var(--label-tertiary, #555);
+  margin-bottom: 14px;
+  opacity: 0.7;
+}
+.spm-nodata-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--label-secondary, #999);
+  margin-bottom: 6px;
+}
+.spm-nodata-desc {
+  font-size: 12px;
+  color: var(--label-tertiary, #666);
+  max-width: 360px;
+  line-height: 1.5;
+}

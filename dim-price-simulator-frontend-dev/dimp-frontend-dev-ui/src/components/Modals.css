@@ -1,0 +1,88 @@
+/* Modals.css — profile, consumption, notif rules, popovers, notif cards */
+/* ============================================================
+   Popups, modals, profile, notifications, page shells
+   ============================================================ */
+
+/* data popup */
+.data-pop { width: 440px; max-width: 92vw; max-height: 80vh; display: flex; flex-direction: column; border-radius: 26px; overflow: hidden;
+  background: var(--glass-thick-bg); backdrop-filter: var(--glass-blur-thick); -webkit-backdrop-filter: var(--glass-blur-thick);
+  box-shadow: var(--glass-shadow-deep), inset 0 0 0 0.5px var(--glass-hairline); animation: sheetIn var(--dur-slow) var(--ease-spring); }
+.dp-head { display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; box-shadow: inset 0 -0.5px 0 var(--separator); font-size: 16px; }
+.dp-body { padding: 14px 18px 20px; overflow-y: auto; }
+.dp-stat { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; box-shadow: inset 0 -0.5px 0 var(--separator); font-size: 14px; color: var(--label-secondary); }
+.dp-stat b { color: var(--label); font-size: 15px; }
+
+/* profile modal */
+.profile-modal { width: 760px; max-width: 94vw; height: 540px; max-height: 88vh; display: flex; border-radius: 28px; overflow: hidden;
+  background: var(--glass-thick-bg); backdrop-filter: var(--glass-blur-thick); -webkit-backdrop-filter: var(--glass-blur-thick);
+  box-shadow: var(--glass-shadow-deep), inset 0 0 0 0.5px var(--glass-hairline); animation: sheetIn var(--dur-slow) var(--ease-spring); }
+.pm-side { width: 220px; flex: none; padding: 18px 12px; box-shadow: inset -0.5px 0 0 var(--separator); display: flex; flex-direction: column; gap: 3px; }
+.pm-side .pm-title { font-size: 17px; font-weight: 700; padding: 6px 12px 14px; }
+.pm-tab { display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 11px; width: 100%; text-align: left; font-size: 14px; font-weight: 500; color: var(--label-secondary); transition: background var(--dur-fast), color var(--dur-fast); }
+.pm-tab:hover { background: var(--fill-tertiary); color: var(--label); }
+.pm-tab.active { background: var(--glass-thin-bg); color: var(--label); box-shadow: inset 0 0 0 0.5px var(--glass-hairline); }
+.pm-tab.active .pm-tic { color: var(--pmi-blue); }
+.pm-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.pm-main-head { display: flex; align-items: center; justify-content: space-between; padding: 18px 22px 14px; }
+.pm-main-head h3 { margin: 0; font-family: var(--font-display); font-size: 20px; font-weight: 700; }
+.pm-main-body { flex: 1; overflow-y: auto; padding: 4px 22px 24px; }
+
+.field { margin-bottom: 16px; }
+.field label { display: block; font-size: 12.5px; font-weight: 600; color: var(--label-secondary); margin-bottom: 6px; }
+.field input { width: 100%; padding: 11px 14px; border-radius: 12px; font-size: 14.5px; color: var(--label);
+  background: var(--grouped-bg-secondary); border: none; box-shadow: inset 0 0 0 0.5px var(--separator); outline: none; transition: box-shadow var(--dur-fast); }
+.field input:focus { box-shadow: inset 0 0 0 1.5px var(--pmi-blue); }
+.field-row { display: flex; gap: 12px; }
+.field-row .field { flex: 1; }
+.profile-bighead { display: flex; align-items: center; gap: 16px; margin-bottom: 22px; }
+.profile-bighead .avatar { width: 64px; height: 64px; flex: 0 0 64px; font-size: 22px; }
+
+/* consumption */
+.cons-bar-wrap { margin: 6px 0 18px; }
+.cons-bar { height: 12px; border-radius: 999px; background: var(--fill); overflow: hidden; box-shadow: inset 0 0 0 0.5px var(--separator); }
+.cons-bar > div { height: 100%; border-radius: 999px; background: var(--pmi-grad); transition: width var(--dur-slow) var(--ease-spring); }
+.cons-meta { display: flex; justify-content: space-between; font-size: 12.5px; color: var(--label-secondary); margin-top: 7px; }
+.cons-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 8px 0 18px; }
+.cons-card { padding: 15px; border-radius: 16px; background: var(--grouped-bg-secondary); box-shadow: inset 0 0 0 0.5px var(--separator); }
+.cons-card .cc-l { font-size: 12px; color: var(--label-secondary); font-weight: 600; }
+.cons-card .cc-v { font-size: 24px; font-weight: 700; margin-top: 4px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.cons-months { display: flex; align-items: flex-end; gap: 10px; height: 120px; padding-top: 10px; }
+.cons-months .cm { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; justify-content: flex-end; }
+.cons-months .cm-bar { width: 70%; max-width: 30px; border-radius: 6px 6px 2px 2px; background: var(--pmi-blue-soft); box-shadow: inset 0 0 0 0.5px rgba(0,156,222,0.4); }
+.cons-months .cm-bar.cur { background: var(--pmi-grad); }
+.cons-months .cm-x { font-size: 11px; color: var(--label-secondary); }
+.cons-warn { display: flex; gap: 10px; align-items: flex-start; padding: 13px 15px; border-radius: 14px; background: var(--pmi-magenta-soft); box-shadow: inset 0 0 0 0.5px rgba(165,24,144,0.3); font-size: 13px; color: var(--label); line-height: 1.4; margin-top: 6px; }
+.cons-warn .cw-ic { color: var(--pmi-magenta); flex: none; }
+
+/* notification rules */
+.rule { display: flex; align-items: flex-start; gap: 12px; padding: 14px 0; box-shadow: inset 0 -0.5px 0 var(--separator); }
+.rule .r-main { flex: 1; min-width: 0; }
+.rule .r-title { font-size: 14px; font-weight: 600; }
+.rule .r-desc { font-size: 12.5px; color: var(--label-secondary); margin-top: 2px; line-height: 1.35; }
+.rule .r-email { font-size: 11.5px; color: var(--pmi-blue); margin-top: 6px; display: inline-flex; align-items: center; gap: 5px; font-weight: 600; }
+.rule-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+
+/* iOS-style toggle */
+.toggle { width: 46px; height: 28px; border-radius: 999px; background: var(--fill); position: relative; transition: background var(--dur-base) var(--ease-spring); flex: none; }
+.toggle.on { background: var(--c-green); }
+.toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 24px; height: 24px; border-radius: 50%; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.25); transition: transform var(--dur-base) var(--ease-spring); }
+.toggle.on::after { transform: translateX(18px); }
+
+/* notifications popover */
+.notif-pop { position: fixed; left: 80px; bottom: 18px; width: 380px; max-width: 92vw; max-height: 70vh; z-index: 60; display: flex; flex-direction: column;
+  border-radius: 24px; overflow: hidden; background: var(--glass-thick-bg); backdrop-filter: var(--glass-blur-thick); -webkit-backdrop-filter: var(--glass-blur-thick);
+  box-shadow: var(--glass-shadow-deep), inset 0 0 0 0.5px var(--glass-hairline); animation: popIn var(--dur-base) var(--ease-spring); transform-origin: bottom left; }
+.notif-head { display: flex; align-items: center; justify-content: space-between; padding: 15px 16px 12px; box-shadow: inset 0 -0.5px 0 var(--separator); }
+.notif-head b { font-size: 16px; }
+.notif-list { overflow-y: auto; padding: 8px; }
+
+/* notification card (with swipe-dismiss) */
+.notif-card { position: relative; border-radius: 16px; overflow: hidden; margin-bottom: 8px; }
+.notif-card .nc-del { position: absolute; right: 0; top: 0; bottom: 0; width: 84px; background: var(--c-red); color: #fff; display: flex; align-items: center; justify-content: center; }
+.notif-card .nc-inner { position: relative; display: flex; gap: 12px; padding: 13px 15px; background: var(--grouped-bg-secondary); box-shadow: inset 0 0 0 0.5px var(--separator); transition: transform var(--dur-base) var(--ease-spring); cursor: grab; }
+.notif-card .nc-ic { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; color: #fff; flex: none; }
+.notif-card .nc-title { font-size: 14px; font-weight: 600; }
+.notif-card .nc-body { font-size: 12.5px; color: var(--label-secondary); margin-top: 2px; line-height: 1.35; }
+.notif-card .nc-time { font-size: 11px; color: var(--label-tertiary); margin-top: 4px; }
+.urg-dot { width: 8px; height: 8px; border-radius: 50%; flex: none; margin-top: 5px; }
+

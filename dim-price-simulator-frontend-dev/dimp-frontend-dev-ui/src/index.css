@@ -1,0 +1,454 @@
+/* index.css — global tokens, fonts, base type & glass utilities (Liquid Glass DS) */
+/* ============================================================
+   Liquid Glass Design System — colors_and_type.css
+   Base + semantic tokens. Models iOS / iPadOS 26 design language.
+   ============================================================ */
+
+/* --- Fonts ------------------------------------------------ */
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap");
+
+/* PMI Tech brand fonts — Poppins (display) + Lato (text) */
+@font-face { font-family: "Lato"; src: url("/uploads/Fonts/Lato/Lato-Light.ttf") format("truetype"); font-weight: 300; font-display: swap; }
+@font-face { font-family: "Lato"; src: url("/uploads/Fonts/Lato/Lato-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Lato"; src: url("/uploads/Fonts/Lato/Lato-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Lato"; src: url("/uploads/Fonts/Lato/Lato-Black.ttf") format("truetype"); font-weight: 900; font-display: swap; }
+@font-face { font-family: "Poppins"; src: url("/uploads/Fonts/Poppins/Poppins-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Poppins"; src: url("/uploads/Fonts/Poppins/Poppins-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Poppins"; src: url("/uploads/Fonts/Poppins/Poppins-SemiBold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Poppins"; src: url("/uploads/Fonts/Poppins/Poppins-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Poppins"; src: url("/uploads/Fonts/Poppins/Poppins-ExtraBold.ttf") format("truetype"); font-weight: 800; font-display: swap; }
+
+/* If you have licensed SF Pro woff2 files, drop them in /fonts/
+   and the @font-face block below will pick them up. */
+@font-face {
+  font-family: "SF Pro Local";
+  src: local("SF Pro Display"), local("SF Pro Text"),
+       url("/fonts/SFPro-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SF Pro Local";
+  src: local("SF Pro Display Medium"), local("SF Pro Text Medium"),
+       url("/fonts/SFPro-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SF Pro Local";
+  src: local("SF Pro Display Semibold"), local("SF Pro Text Semibold"),
+       url("/fonts/SFPro-Semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SF Pro Local";
+  src: local("SF Pro Display Bold"), local("SF Pro Text Bold"),
+       url("/fonts/SFPro-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+:root {
+  /* ============ Type families ============ */
+  /* PMI Tech: Lato for text/UI, Poppins for display & headings */
+  --font-sans: "Lato", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Poppins", "Lato", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --font-rounded: "Poppins", "SF Pro Rounded", Nunito,
+    -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Menlo", "Roboto Mono", monospace;
+
+  /* ============ Type scale ============ */
+  --fs-footnote: 11px;
+  --fs-caption-2: 12px;
+  --fs-caption-1: 13px;
+  --fs-subhead: 13px;
+  --fs-callout: 15px;
+  --fs-body: 17px;
+  --fs-headline: 17px;
+  --fs-title-3: 20px;
+  --fs-title-2: 22px;
+  --fs-title-1: 28px;
+  --fs-large-title: 34px;
+  --fs-display: 48px;
+
+  /* line heights (unitless) */
+  --lh-tight: 1.1;
+  --lh-snug: 1.2;
+  --lh-normal: 1.3;
+  --lh-loose: 1.45;
+
+  /* weights */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-heavy: 900;
+
+  /* letter-spacing */
+  --ls-tight: -0.02em;
+  --ls-snug: -0.012em;
+  --ls-normal: 0em;
+  --ls-wide: 0.01em;
+
+  /* ============ System palette — LIGHT (defaults) ============ */
+  --c-red: #ff3b30;
+  --c-orange: #ff9500;
+  --c-yellow: #ffcc00;
+  --c-green: #34c759;
+  --c-mint: #00c7be;
+  --c-teal: #30b0c7;
+  --c-cyan: #32ade6;
+  --c-blue: #007aff;
+  --c-indigo: #5856d6;
+  --c-purple: #af52de;
+  --c-pink: #ff2d55;
+  --c-brown: #a2845e;
+
+  /* gray ramp (light) */
+  --c-gray: #8e8e93;
+  --c-gray-2: #aeaeb2;
+  --c-gray-3: #c7c7cc;
+  --c-gray-4: #d1d1d6;
+  --c-gray-5: #e5e5ea;
+  --c-gray-6: #f2f2f7;
+  --c-white: #ffffff;
+  --c-black: #000000;
+
+  /* ============ Semantic — LIGHT ============ */
+  --label: rgba(0, 0, 0, 1);
+  --label-secondary: rgba(60, 60, 67, 0.6);
+  --label-tertiary: rgba(60, 60, 67, 0.3);
+  --label-quaternary: rgba(60, 60, 67, 0.18);
+
+  --fill: rgba(120, 120, 128, 0.2);
+  --fill-secondary: rgba(120, 120, 128, 0.16);
+  --fill-tertiary: rgba(118, 118, 128, 0.12);
+  --fill-quaternary: rgba(116, 116, 128, 0.08);
+
+  --separator: rgba(60, 60, 67, 0.29);
+  --separator-opaque: #c6c6c8;
+
+  --bg: #ffffff;
+  --bg-secondary: #f2f2f7;
+  --bg-tertiary: #ffffff;
+
+  --grouped-bg: #f2f2f7;
+  --grouped-bg-secondary: #ffffff;
+  --grouped-bg-tertiary: #f2f2f7;
+
+  /* tint - the default accent (Blue) */
+  --tint: var(--c-blue);
+
+  /* ============ Liquid Glass — LIGHT recipes ============ */
+  /* Ultrathin → Thick (opacity ramp) */
+  --glass-ultrathin-bg: rgba(255, 255, 255, 0.3);
+  --glass-thin-bg: rgba(255, 255, 255, 0.55);
+  --glass-regular-bg: rgba(250, 250, 250, 0.7);
+  --glass-thick-bg: rgba(250, 250, 250, 0.85);
+  --glass-chrome-bg: rgba(245, 245, 247, 0.92);
+
+  --glass-blur-ultrathin: blur(20px) saturate(160%);
+  --glass-blur-thin: blur(30px) saturate(170%);
+  --glass-blur-regular: blur(40px) saturate(180%);
+  --glass-blur-thick: blur(50px) saturate(190%);
+
+  --glass-hairline: rgba(255, 255, 255, 0.6);
+  --glass-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+  --glass-shadow-deep: 0 20px 60px rgba(0, 0, 0, 0.18);
+
+  /* Tinted glass (over the standard glass recipe) */
+  --glass-tint-blue: rgba(0, 122, 255, 0.22);
+  --glass-tint-red: rgba(255, 59, 48, 0.22);
+  --glass-tint-green: rgba(52, 199, 89, 0.22);
+
+  /* Scroll edge mask gradients — apply via mask-image */
+  --scroll-edge-hard: linear-gradient(to bottom, #000 0, #000 calc(100% - 8px), transparent 100%);
+  --scroll-edge-soft: linear-gradient(to bottom, #000 0, #000 calc(100% - 56px), transparent 100%);
+
+  /* ============ Radii ============ */
+  --r-1: 6px;
+  --r-2: 8px;
+  --r-3: 12px;
+  --r-4: 16px;
+  --r-5: 22px;
+  --r-6: 28px;
+  --r-7: 34px;
+  --r-pill: 999px;
+
+  /* ============ Spacing (4-px module) ============ */
+  --s-1: 2px;
+  --s-2: 4px;
+  --s-3: 6px;
+  --s-4: 8px;
+  --s-5: 10px;
+  --s-6: 12px;
+  --s-7: 16px;
+  --s-8: 20px;
+  --s-9: 24px;
+  --s-10: 32px;
+  --s-11: 40px;
+  --s-12: 56px;
+
+  /* gutter, safe area */
+  --gutter: 16px;
+  --gutter-ipad: 20px;
+  --safe-bottom: 34px;
+
+  /* ============ Motion ============ */
+  --ease-spring: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 120ms;
+  --dur-base: 220ms;
+  --dur-slow: 380ms;
+}
+
+/* ============ DARK MODE ============ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* System colors swap to their dark variants */
+    --c-red: #ff453a;
+    --c-orange: #ff9f0a;
+    --c-yellow: #ffd60a;
+    --c-green: #30d158;
+    --c-mint: #63e6e2;
+    --c-teal: #40c8e0;
+    --c-cyan: #64d2ff;
+    --c-blue: #0a84ff;
+    --c-indigo: #5e5ce6;
+    --c-purple: #bf5af2;
+    --c-pink: #ff375f;
+    --c-brown: #ac8e68;
+
+    /* gray ramp (dark) — inverted scale */
+    --c-gray: #8e8e93;
+    --c-gray-2: #636366;
+    --c-gray-3: #48484a;
+    --c-gray-4: #3a3a3c;
+    --c-gray-5: #2c2c2e;
+    --c-gray-6: #1c1c1e;
+
+    --label: #ffffff;
+    --label-secondary: rgba(235, 235, 245, 0.6);
+    --label-tertiary: rgba(235, 235, 245, 0.3);
+    --label-quaternary: rgba(235, 235, 245, 0.16);
+
+    --fill: rgba(120, 120, 128, 0.36);
+    --fill-secondary: rgba(120, 120, 128, 0.32);
+    --fill-tertiary: rgba(118, 118, 128, 0.24);
+    --fill-quaternary: rgba(118, 118, 128, 0.18);
+
+    --separator: rgba(84, 84, 88, 0.6);
+    --separator-opaque: #38383a;
+
+    --bg: #000000;
+    --bg-secondary: #1c1c1e;
+    --bg-tertiary: #2c2c2e;
+
+    --grouped-bg: #000000;
+    --grouped-bg-secondary: #1c1c1e;
+    --grouped-bg-tertiary: #2c2c2e;
+
+    /* Glass recipes (dark) — stacked-gradient model */
+    --glass-ultrathin-bg: rgba(40, 40, 40, 0.45);
+    --glass-thin-bg: rgba(40, 40, 40, 0.6);
+    --glass-regular-bg: rgba(28, 28, 30, 0.7);
+    --glass-thick-bg: rgba(28, 28, 30, 0.85);
+    --glass-chrome-bg: rgba(18, 18, 18, 0.92);
+
+    --glass-hairline: rgba(255, 255, 255, 0.12);
+    --glass-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+    --glass-shadow-deep: 0 20px 60px rgba(0, 0, 0, 0.55);
+  }
+}
+
+/* Force-light / force-dark utility classes */
+.theme-light {
+  color-scheme: light;
+}
+.theme-dark {
+  color-scheme: dark;
+  --c-red: #ff453a;
+  --c-blue: #0a84ff;
+  --c-green: #30d158;
+  --c-indigo: #5e5ce6;
+  --c-purple: #bf5af2;
+  --c-pink: #ff375f;
+  --label: #ffffff;
+  --label-secondary: rgba(235, 235, 245, 0.6);
+  --label-tertiary: rgba(235, 235, 245, 0.3);
+  --label-quaternary: rgba(235, 235, 245, 0.16);
+  --fill: rgba(120, 120, 128, 0.36);
+  --separator: rgba(84, 84, 88, 0.6);
+  --bg: #000000;
+  --bg-secondary: #1c1c1e;
+  --grouped-bg: #000000;
+  --grouped-bg-secondary: #1c1c1e;
+  --glass-regular-bg: rgba(28, 28, 30, 0.7);
+  --glass-thin-bg: rgba(40, 40, 40, 0.6);
+  --glass-thick-bg: rgba(28, 28, 30, 0.85);
+  --glass-hairline: rgba(255, 255, 255, 0.12);
+  --glass-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+  background: var(--bg);
+  color: var(--label);
+}
+
+/* ============================================================
+   Semantic text styles — use these classes for type
+   ============================================================ */
+.t-large-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-large-title);
+  font-weight: var(--fw-bold);
+  line-height: 1.2;
+  letter-spacing: var(--ls-tight);
+  color: var(--label);
+}
+.t-title-1 {
+  font-family: var(--font-display);
+  font-size: var(--fs-title-1);
+  font-weight: var(--fw-bold);
+  line-height: 1.21;
+  letter-spacing: var(--ls-tight);
+  color: var(--label);
+}
+.t-title-2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-title-2);
+  font-weight: var(--fw-bold);
+  line-height: 1.27;
+  letter-spacing: var(--ls-snug);
+  color: var(--label);
+}
+.t-title-3 {
+  font-family: var(--font-display);
+  font-size: var(--fs-title-3);
+  font-weight: var(--fw-semibold);
+  line-height: 1.25;
+  letter-spacing: var(--ls-snug);
+  color: var(--label);
+}
+.t-headline {
+  font-family: var(--font-display);
+  font-size: var(--fs-headline);
+  font-weight: var(--fw-semibold);
+  line-height: 1.29;
+  letter-spacing: var(--ls-snug);
+  color: var(--label);
+}
+.t-body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-regular);
+  line-height: 1.29;
+  color: var(--label);
+}
+.t-callout {
+  font-family: var(--font-sans);
+  font-size: var(--fs-callout);
+  font-weight: var(--fw-regular);
+  line-height: 1.33;
+  color: var(--label);
+}
+.t-subhead {
+  font-family: var(--font-sans);
+  font-size: var(--fs-subhead);
+  font-weight: var(--fw-regular);
+  line-height: 1.38;
+  color: var(--label);
+}
+.t-footnote {
+  font-family: var(--font-sans);
+  font-size: var(--fs-footnote);
+  font-weight: var(--fw-regular);
+  line-height: 1.36;
+  color: var(--label-secondary);
+}
+.t-caption {
+  font-family: var(--font-sans);
+  font-size: var(--fs-caption-1);
+  font-weight: var(--fw-regular);
+  line-height: 1.33;
+  color: var(--label-secondary);
+}
+
+/* ============================================================
+   Liquid Glass utility classes — drop on a positioned ancestor
+   ============================================================ */
+.glass {
+  background: var(--glass-regular-bg);
+  backdrop-filter: var(--glass-blur-regular);
+  -webkit-backdrop-filter: var(--glass-blur-regular);
+  box-shadow:
+    var(--glass-shadow),
+    inset 0 0 0 0.5px var(--glass-hairline);
+  border-radius: var(--r-7);
+}
+.glass-thin {
+  background: var(--glass-thin-bg);
+  backdrop-filter: var(--glass-blur-thin);
+  -webkit-backdrop-filter: var(--glass-blur-thin);
+  box-shadow:
+    var(--glass-shadow),
+    inset 0 0 0 0.5px var(--glass-hairline);
+}
+.glass-ultrathin {
+  background: var(--glass-ultrathin-bg);
+  backdrop-filter: var(--glass-blur-ultrathin);
+  -webkit-backdrop-filter: var(--glass-blur-ultrathin);
+  box-shadow: inset 0 0 0 0.5px var(--glass-hairline);
+}
+.glass-thick {
+  background: var(--glass-thick-bg);
+  backdrop-filter: var(--glass-blur-thick);
+  -webkit-backdrop-filter: var(--glass-blur-thick);
+  box-shadow:
+    var(--glass-shadow-deep),
+    inset 0 0 0 0.5px var(--glass-hairline);
+}
+.glass-chrome {
+  background: var(--glass-chrome-bg);
+  backdrop-filter: var(--glass-blur-thick);
+  -webkit-backdrop-filter: var(--glass-blur-thick);
+  box-shadow: inset 0 -0.5px 0 var(--separator);
+}
+
+/* Tinted glass for primary actions */
+.glass-tint-blue {
+  background: linear-gradient(var(--glass-tint-blue), var(--glass-tint-blue)),
+    var(--glass-regular-bg);
+  backdrop-filter: var(--glass-blur-regular);
+  -webkit-backdrop-filter: var(--glass-blur-regular);
+  box-shadow:
+    var(--glass-shadow),
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.5);
+  color: #fff;
+}
+.glass-tint-red {
+  background: linear-gradient(var(--glass-tint-red), var(--glass-tint-red)),
+    var(--glass-regular-bg);
+  backdrop-filter: var(--glass-blur-regular);
+  -webkit-backdrop-filter: var(--glass-blur-regular);
+  color: #fff;
+}
+
+/* Scroll-edge masks (apply to fixed top/bottom chrome containers) */
+.scroll-edge-hard {
+  -webkit-mask-image: var(--scroll-edge-hard);
+  mask-image: var(--scroll-edge-hard);
+}
+.scroll-edge-soft {
+  -webkit-mask-image: var(--scroll-edge-soft);
+  mask-image: var(--scroll-edge-soft);
+}
+
+/* Press / hover micro-interactions */
+.press {
+  transition:
+    transform var(--dur-fast) var(--ease-spring),
+    filter var(--dur-fast) var(--ease-spring);
+}
+.press:active {
+  transform: scale(0.97);
+  filter: brightness(0.95);
+}

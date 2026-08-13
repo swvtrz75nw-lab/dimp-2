@@ -1,0 +1,117 @@
+/* infByCostDriver.css — Inflation by cost driver section */
+
+.inf-bcd-card {
+  background: var(--card-bg, rgba(20, 22, 35, 0.85));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 24px 28px;
+  margin-bottom: 20px;
+}
+
+.inf-bcd-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.inf-bcd-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--label-primary, #fff);
+  margin: 0;
+}
+
+.inf-bcd-toggle {
+  display: flex;
+  gap: 0;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 2px;
+}
+
+.inf-bcd-toggle-btn {
+  border: none;
+  background: transparent;
+  color: var(--label-secondary, rgba(255, 255, 255, 0.55));
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.inf-bcd-toggle-btn.active {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--label-primary, #fff);
+}
+
+.inf-bcd-toggle-btn:hover:not(.active) {
+  color: var(--label-primary, #fff);
+}
+
+.inf-bcd-desc {
+  font-size: 12px;
+  color: var(--label-tertiary, rgba(255, 255, 255, 0.45));
+  line-height: 1.5;
+  margin: 0 0 18px;
+}
+
+/* Stacked bar */
+.inf-bcd-bar-wrap {
+  margin-bottom: 16px;
+}
+
+.inf-bcd-bar {
+  display: flex;
+  height: 28px;
+  border-radius: 6px;
+  overflow: hidden;
+  gap: 1px;
+}
+
+.inf-bcd-seg {
+  min-width: 3px;
+  transition: opacity 0.15s ease;
+}
+
+.inf-bcd-seg:hover {
+  opacity: 0.8;
+}
+
+/* Legend */
+.inf-bcd-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+}
+
+.inf-bcd-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  color: var(--label-secondary, rgba(255, 255, 255, 0.7));
+}
+
+.inf-bcd-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.inf-bcd-legend-label {
+  color: var(--label-secondary, rgba(255, 255, 255, 0.7));
+}
+
+.inf-bcd-legend-val {
+  font-weight: 700;
+  color: var(--label-primary, #fff);
+}
+
+.inf-bcd-legend-pct {
+  color: var(--label-tertiary, rgba(255, 255, 255, 0.45));
+  font-size: 10.5px;
+}

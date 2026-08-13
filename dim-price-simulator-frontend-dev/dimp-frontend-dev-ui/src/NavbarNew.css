@@ -1,0 +1,19 @@
+/* NavbarNew.css — refined variant of the chat top bar.
+   Shares the layout/tab styles in Navbar.css; this layer adds the floating
+   "glass chrome" treatment (translucent bar + bottom hairline + scroll-edge)
+   so the updated bar reads as fixed app chrome over the canvas. */
+
+.chat-topbar.navbar-new {
+  background: var(--glass-chrome-bg);
+  -webkit-backdrop-filter: var(--glass-blur-thick);
+  backdrop-filter: var(--glass-blur-thick);
+  box-shadow: inset 0 -0.5px 0 var(--separator);
+}
+
+/* slightly tighter, brighter active tab to match the heavier chrome */
+.chat-topbar.navbar-new .chat-tabs {
+  background: var(--glass-regular-bg);
+}
+.chat-topbar.navbar-new .chat-tab.active {
+  box-shadow: inset 0 0 0 0.5px var(--glass-hairline), var(--glass-shadow);
+}

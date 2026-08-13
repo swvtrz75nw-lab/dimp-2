@@ -1,0 +1,211 @@
+/* Theme variables - override these in your app's :root to restyle.
+   Values below are the fallbacks (2nd arg to var()) so the component works
+   even if your app never defines them. */
+:root {
+  --fd-surface: #0d1117;
+  --fd-surface-2: #131d2a;
+  --fd-text-primary: #f5f6fa;
+  --fd-text-secondary: #9c9cae;
+  --fd-muted: #77788a;
+  --fd-gridline: #1e2a40;
+  --fd-border: rgba(100, 130, 200, 0.15);
+  --fd-accent: #22d3ee;
+  --fd-radius-sm: 10px;
+}
+
+/* ---------- toolbar trigger + reset link ---------- */
+.reset-link {
+  border: none;
+  background: none;
+  color: var(--fd-text-secondary);
+  font-size: 12.5px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  padding: 0;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+}
+.reset-link:hover { color: var(--fd-text-primary); }
+
+.filters-toggle-btn {
+  border: 1px solid var(--fd-border);
+  background: var(--fd-surface);
+  color: var(--fd-text-primary);
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.filters-toggle-btn:hover { background: var(--fd-gridline); }
+.filters-toggle-btn.open {
+  border-color: color-mix(in srgb, var(--fd-accent) 50%, var(--fd-border));
+  color: var(--fd-accent);
+}
+
+/* ---------- filters drawer (right side, collapsible) ---------- */
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 6, 10, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 40;
+}
+.drawer-overlay.open { opacity: 1; pointer-events: auto; }
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 400px;
+  max-width: 92vw;
+  background: var(--fd-surface);
+  border-left: 1px solid var(--fd-border);
+  transform: translateX(100%);
+  transition: transform 0.25s ease;
+  z-index: 41;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -12px 0 40px rgba(0, 0, 0, 0.2);
+}
+.drawer.open { transform: translateX(0); }
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--fd-gridline);
+  flex: none;
+}
+.drawer-header h2 { font-size: 15px; font-weight: 750; margin: 0; }
+
+.drawer-close-btn {
+  border: none;
+  background: var(--fd-surface-2);
+  color: var(--fd-text-secondary);
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 13px;
+  flex: none;
+}
+.drawer-close-btn:hover { background: var(--fd-gridline); color: var(--fd-text-primary); }
+
+.drawer-body { padding: 16px 18px; overflow-y: auto; flex: 1; }
+
+@media (max-width: 900px) {
+  .drawer { width: 100%; max-width: 100%; }
+}
+
+/* ---------- filter subtabs + tree ---------- */
+.filters-subtabs {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 12px;
+}
+.filters-subtabs button {
+  border: none;
+  background: none;
+  color: var(--fd-text-secondary);
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 7px 9px;
+  cursor: pointer;
+  border-radius: 7px;
+  text-align: left;
+}
+.filters-subtabs button.active { color: var(--fd-text-primary); background: var(--fd-gridline); }
+.filters-subtabs button:hover:not(.active) {
+  background: color-mix(in srgb, var(--fd-gridline) 55%, transparent);
+}
+
+.filters-panel-note {
+  font-size: 11px;
+  color: var(--fd-muted);
+  margin: -2px 0 10px;
+  line-height: 1.4;
+}
+
+.tree-search input {
+  width: 100%;
+  padding: 7px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--fd-border);
+  background: var(--fd-surface-2);
+  color: var(--fd-text-primary);
+  font-size: 12.5px;
+  margin-bottom: 10px;
+}
+
+.tree-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.tree-count-summary { font-size: 11.5px; color: var(--fd-muted); margin-right: auto; }
+.tree-actions button {
+  border: 1px solid var(--fd-border);
+  background: var(--fd-surface-2);
+  color: var(--fd-text-secondary);
+  padding: 4px 9px;
+  border-radius: 7px;
+  font-size: 11px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.tree-actions button:hover { color: var(--fd-text-primary); background: var(--fd-gridline); }
+
+.tree {
+  max-height: 280px;
+  overflow-y: auto;
+  border: 1px solid var(--fd-gridline);
+  border-radius: 8px;
+  padding: 4px 0;
+}
+.tree-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px 5px 0;
+  font-size: 12.5px;
+  border-radius: 6px;
+}
+.tree-row:hover { background: var(--fd-gridline); }
+.tree-toggle,
+.tree-toggle-spacer { width: 16px; height: 16px; flex: none; }
+.tree-toggle {
+  border: none;
+  background: none;
+  color: var(--fd-muted);
+  cursor: pointer;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tree-checkbox { flex: none; width: 14px; height: 14px; accent-color: var(--fd-accent); cursor: pointer; }
+.tree-label {
+  flex: 1;
+  cursor: pointer;
+  color: var(--fd-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.tree-count { font-size: 10.5px; color: var(--fd-muted); font-variant-numeric: tabular-nums; flex: none; padding-right: 4px; }

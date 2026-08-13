@@ -1,0 +1,252 @@
+/* Sidebar.css — retractable left rail (extracted from app layout) */
+/* ============================================================
+   Sidebar
+   ============================================================ */
+.sidebar {
+  width: var(--sidebar-w);
+  flex: 0 0 var(--sidebar-w);
+  height: 100vh;
+  padding: 14px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: var(--glass-chrome-bg);
+  backdrop-filter: var(--glass-blur-thick);
+  -webkit-backdrop-filter: var(--glass-blur-thick);
+  box-shadow: inset -0.5px 0 0 var(--separator);
+  transition: width var(--dur-slow) var(--ease-spring), flex-basis var(--dur-slow) var(--ease-spring);
+  overflow: hidden;
+  position: relative;
+  z-index: 5;
+}
+.sidebar.collapsed { width: var(--sidebar-w-collapsed); flex-basis: var(--sidebar-w-collapsed); }
+
+/* collapsed: rail width is tuned so the (unchanged) left-aligned icons read as centered —
+   nothing shifts horizontally, so open/close stays rock-steady */
+.sidebar.collapsed .sb-item::before { display: none; }
+.sidebar.collapsed .sb-footer { align-items: center; }
+.sidebar.collapsed .sb-profile { justify-content: center; padding-left: 0; padding-right: 0; }
+
+.sb-header { display: flex; align-items: center; gap: 12px; padding: 6px 8px 10px 4px; min-height: 44px; }
+.sb-logo-toggle { position: relative; width: 34px; height: 34px; flex: 0 0 34px; border-radius: 10px; padding: 0; }
+.sb-logo-mark {
+  width: 34px; height: 34px; flex: 0 0 34px; border-radius: 10px;
+  background: transparent;
+  display: grid; place-items: center; color: #fff; font-weight: 800;
+  box-shadow: none;
+  position: relative; overflow: hidden; transition: opacity var(--dur-fast);
+}
+.theme-light-root .sb-logo-mark {
+  background: linear-gradient(160deg, #ffffff, #e9f2fb);
+  box-shadow: 0 4px 14px rgba(0,60,100,0.35), inset 0 0 0 0.5px rgba(255,255,255,0.6);
+}
+.sb-logo-mark img { width: 34px; height: 34px; object-fit: contain; display: block; }
+.theme-light-root .sb-logo-mark img { width: 26px; height: 26px; }
+/* collapsed: hovering the logo swaps it for an expand affordance */
+.sb-logo-expand {
+  position: absolute; inset: 0; display: grid; place-items: center; border-radius: 10px;
+  background: var(--fill-secondary); color: var(--label); opacity: 0; pointer-events: none;
+  box-shadow: inset 0 0 0 0.5px var(--separator); transition: opacity var(--dur-fast);
+}
+.sidebar.collapsed .sb-logo-toggle { cursor: pointer; }
+.sidebar.collapsed .sb-logo-toggle:hover .sb-logo-mark { opacity: 0; }
+.sidebar.collapsed .sb-logo-toggle:hover .sb-logo-expand { opacity: 1; }
+.sb-wordmark { display: flex; flex-direction: column; line-height: 1.05; white-space: nowrap; overflow: hidden; }
+.sb-wordmark .w1 { font-family: var(--font-display); font-size: 14px; font-weight: 700; letter-spacing: -0.01em; }
+.sb-wordmark .w2 { font-size: 11px; font-weight: 500; color: var(--label-secondary); }
+
+.sb-collapse-btn {
+  margin-left: auto; width: 30px; height: 30px; border-radius: 8px;
+  display: grid; place-items: center; color: var(--label-secondary);
+  transition: background var(--dur-fast), color var(--dur-fast);
+}
+.sb-collapse-btn:hover { background: var(--fill-tertiary); color: var(--label); }
+.sidebar.collapsed .sb-collapse-btn { margin-left: 0; }
+
+.sb-scroll { flex: 1; overflow-y: auto; overflow-x: hidden; margin: 0 -4px; padding: 0 4px; }
+.sb-scroll::-webkit-scrollbar { width: 0; }
+
+.sb-section-label {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--label-tertiary); padding: 14px 12px 6px; white-space: nowrap;
+  overflow: hidden; transition: opacity var(--dur-base);
+}
+.sidebar.collapsed .sb-section-label { opacity: 0; height: 18px; padding-top: 18px; }
+
+.sb-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 9px 10px; border-radius: 11px; width: 100%;
+  color: var(--label); position: relative; text-align: left;
+  transition: background var(--dur-fast) var(--ease-out), opacity var(--dur-fast);
+}
+.sb-item:not(.active) { opacity: 0.66; }
+.sb-item:hover { background: var(--fill-tertiary); opacity: 1; }
+.sb-item.active { background: var(--glass-thin-bg); color: var(--label); box-shadow: inset 0 0 0 0.5px var(--glass-hairline); }
+.sb-item.active .sb-icon { color: var(--pmi-blue); }
+.sb-item.active::before {
+  content:""; position:absolute; left:-4px; top:50%; transform:translateY(-50%);
+  width:3px; height:18px; border-radius:3px; background: var(--pmi-grad);
+}
+.sb-icon { width: 22px; height: 22px; flex: 0 0 22px; display: grid; place-items: center; }
+.sb-label { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sidebar.collapsed .sb-label { opacity: 0; width: 0; overflow: hidden; }
+.sb-item .sb-label { transition: opacity var(--dur-base); }
+
+/* coming-soon / expansion modules */
+.sb-item-soon { cursor: default; }
+.sb-item-soon:not(:hover) { opacity: 0.5; }
+.sb-item-soon:hover { background: transparent; opacity: 0.62; }
+.sb-item-soon .sb-label { font-weight: 500; }
+.sb-soon-pill {
+  margin-left: auto; flex: none;
+  font-size: 9.5px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase;
+  padding: 2.5px 7px; border-radius: var(--r-pill); white-space: nowrap;
+  color: var(--label-secondary); background: var(--fill-tertiary);
+  box-shadow: inset 0 0 0 0.5px var(--separator);
+  transition: opacity var(--dur-base);
+}
+.sidebar.collapsed .sb-soon-pill { opacity: 0; width: 0; padding: 0; overflow: hidden; }
+
+.sb-recent-item { font-size: 13px; padding: 7px 10px 7px 12px; color: var(--label-secondary); }
+.sb-recent-item:hover { color: var(--label); }
+.sb-recent-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--label-tertiary); flex: 0 0 5px; }
+
+.sb-showall { font-size: 12px; color: var(--pmi-blue); padding: 6px 10px 6px 12px; font-weight: 600; }
+.sb-showall:hover { opacity: 0.8; }
+
+/* sidebar footer: profile + bell */
+.sb-footer {
+  margin-top: 6px; padding-top: 10px; box-shadow: inset 0 0.5px 0 var(--separator);
+  display: flex; align-items: center; gap: 8px;
+}
+.sidebar.collapsed .sb-footer { flex-direction: column; gap: 8px; }
+.sb-profile {
+  display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0;
+  padding: 6px; border-radius: 12px; transition: background var(--dur-fast);
+}
+.sb-profile:hover { background: var(--fill-tertiary); }
+.sidebar.collapsed .sb-profile { flex: 0; }
+.avatar {
+  width: 34px; height: 34px; flex: 0 0 34px; border-radius: 50%;
+  display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 13px;
+  background: var(--pmi-grad); box-shadow: inset 0 0 0 0.5px rgba(255,255,255,0.4);
+}
+.sb-profile-meta { display: flex; flex-direction: column; line-height: 1.15; overflow: hidden; }
+.sb-profile-meta .nm { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sb-profile-meta .rl { font-size: 11px; color: var(--label-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sidebar.collapsed .sb-profile-meta { display: none; }
+.sb-bell {
+  width: 36px; height: 36px; flex: 0 0 36px; border-radius: 10px;
+  display: grid; place-items: center; color: var(--label-secondary); position: relative;
+  transition: background var(--dur-fast), color var(--dur-fast);
+}
+.sb-bell:hover { background: var(--fill-tertiary); color: var(--label); }
+.sb-bell .badge {
+  position: absolute; top: 6px; right: 6px; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--pmi-magenta); box-shadow: 0 0 0 2px var(--glass-chrome-bg);
+}
+
+
+
+/* ============================================================
+   Force dark theme on sidebar regardless of app theme
+   ============================================================ */
+.theme-light-root .sidebar {
+  --label: rgba(255, 255, 255, 1);
+  --label-secondary: rgba(235, 235, 245, 0.6);
+  --label-tertiary: rgba(235, 235, 245, 0.3);
+  --label-quaternary: rgba(235, 235, 245, 0.16);
+  --separator: rgba(84, 84, 88, 0.6);
+  --fill: rgba(120, 120, 128, 0.36);
+  --fill-secondary: rgba(120, 120, 128, 0.32);
+  --fill-tertiary: rgba(118, 118, 128, 0.24);
+  --glass-chrome-bg: rgba(22, 26, 34, 0.95);
+  --glass-thick-bg: rgba(28, 32, 40, 0.82);
+  --glass-hairline: rgba(255, 255, 255, 0.08);
+  background: rgba(10, 14, 20, 0.97);
+  color: rgba(255, 255, 255, 1);
+}
+
+.theme-light-root .sidebar .nav-label,
+.theme-light-root .sidebar .nav-item .ni-label {
+  color: rgba(235, 235, 245, 0.85);
+}
+
+.theme-light-root .sidebar .nav-item:hover .ni-label {
+  color: rgba(255, 255, 255, 1);
+}
+
+.theme-light-root .sidebar .nav-item.active {
+  background: rgba(0, 156, 222, 0.12);
+}
+
+.theme-light-root .sidebar .nav-item.active .ni-label {
+  color: #fff;
+}
+
+.theme-light-root .sidebar .nav-section-label {
+  color: rgba(235, 235, 245, 0.35);
+}
+
+.theme-light-root .sidebar .sidebar-footer,
+.theme-light-root .sidebar .sf-name,
+.theme-light-root .sidebar .sf-role {
+  color: rgba(235, 235, 245, 0.7);
+}
+
+.theme-light-root .sidebar .sf-role {
+  color: rgba(235, 235, 245, 0.4);
+}
+
+.theme-light-root .sidebar .badge {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(235, 235, 245, 0.5);
+}
+
+
+/* ============================================================
+   ProcureAI button — gradient cyan/teal pill style
+   ============================================================ */
+.sb-item.sb-item-procureai {
+  background: linear-gradient(135deg, #38bdf8, #22d3ee);
+  color: #0a1628;
+  border-radius: 12px;
+  font-weight: 600;
+  margin: 4px 0 8px;
+  padding: 10px 12px;
+}
+
+.sb-item.sb-item-procureai .sb-icon {
+  color: #0a1628;
+}
+
+.sb-item.sb-item-procureai .sb-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.sb-item.sb-item-procureai .sb-label {
+  color: #0a1628;
+  font-weight: 650;
+}
+
+.sb-item.sb-item-procureai:hover {
+  background: linear-gradient(135deg, #7dd3fc, #67e8f9);
+}
+
+.sb-item.sb-item-procureai.active {
+  background: linear-gradient(135deg, #38bdf8, #22d3ee);
+  box-shadow: 0 2px 12px rgba(56, 189, 248, 0.3);
+}
+
+.sb-ai-badge {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: none;
+  color: #0a1628;
+  letter-spacing: 0.03em;
+  opacity: 0.6;
+}

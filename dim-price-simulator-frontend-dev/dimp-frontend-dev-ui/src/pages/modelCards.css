@@ -1,0 +1,240 @@
+/* modelCards.css — Model Cards · Logic Studio page */
+.mc-page {
+  padding: 32px 36px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.mc-header { margin-bottom: 28px; }
+.mc-kicker {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pmi-blue);
+  margin-bottom: 6px;
+  display: block;
+}
+.mc-title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--label);
+  margin-bottom: 6px;
+}
+.mc-subtitle {
+  font-size: 13px;
+  color: var(--label-secondary);
+  line-height: 1.5;
+}
+
+/* Content grid: two panels */
+.mc-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* Left: Model Card panel */
+.mc-card-panel {
+  background: var(--grouped-bg-secondary);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: inset 0 0 0 0.5px var(--separator);
+}
+.mc-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.mc-card-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--label);
+}
+.mc-cat-select {
+  background: var(--fill-tertiary);
+  border: 1px solid var(--separator);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--label);
+  cursor: pointer;
+}
+
+.mc-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.mc-version-pill {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(0,156,222,0.15);
+  color: var(--pmi-blue);
+}
+.mc-version-pill.draft {
+  background: rgba(255,179,64,0.15);
+  color: #ffb340;
+}
+.mc-owner {
+  font-size: 12px;
+  color: var(--label-secondary);
+}
+
+.mc-card-table {
+  display: flex;
+  flex-direction: column;
+}
+.mc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 12px 0;
+  border-top: 1px solid var(--separator);
+}
+.mc-row:first-child { border-top: none; }
+.mc-row-k {
+  font-size: 13px;
+  color: var(--label-secondary);
+}
+.mc-row-v {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--label);
+  text-align: right;
+}
+.mc-row-v.mc-valid {
+  color: var(--c-green);
+}
+
+/* Right: Logic Studio panel */
+.mc-studio-panel {
+  background: var(--grouped-bg-secondary);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: inset 0 0 0 0.5px var(--separator);
+  display: flex;
+  flex-direction: column;
+}
+.mc-studio-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.mc-studio-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--label);
+}
+.mc-studio-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mc-agent-pill {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(0,156,222,0.12);
+  color: var(--pmi-blue);
+}
+.mc-new-btn {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 8px;
+  background: var(--fill-tertiary);
+  color: var(--label);
+  box-shadow: inset 0 0 0 0.5px var(--separator);
+}
+.mc-new-btn:hover { background: var(--fill-secondary); }
+
+.mc-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.mc-suggestion-chip {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: var(--fill-tertiary);
+  color: var(--label-secondary);
+  box-shadow: inset 0 0 0 0.5px var(--separator);
+  transition: background 0.15s, color 0.15s;
+}
+.mc-suggestion-chip:hover {
+  background: var(--fill-secondary);
+  color: var(--label);
+}
+
+.mc-studio-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+  padding: 24px 0;
+}
+.mc-studio-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--pmi-grad);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.mc-studio-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--label);
+}
+.mc-studio-desc {
+  font-size: 13px;
+  color: var(--label-secondary);
+  max-width: 280px;
+  line-height: 1.4;
+}
+
+.mc-studio-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--fill-tertiary);
+  box-shadow: inset 0 0 0 0.5px var(--separator);
+}
+.mc-studio-input {
+  flex: 1;
+  background: none;
+  border: none;
+  font-size: 13px;
+  color: var(--label);
+  outline: none;
+}
+.mc-studio-input::placeholder { color: var(--label-tertiary); }
+.mc-studio-send {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--pmi-blue);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+.mc-studio-send:hover { opacity: 0.85; }

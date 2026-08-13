@@ -1,0 +1,466 @@
+/* infEvolution.css — Inflation evolution section */
+
+.inf-evo-card {
+  border-radius: 18px;
+  padding: 24px 20px 20px;
+  background: var(--grouped-bg-secondary);
+  box-shadow: inset 0 0 0 0.5px var(--separator);
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Header */
+.inf-evo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+.inf-evo-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--label);
+  margin: 0;
+}
+.inf-evo-filters {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--separator);
+  flex: none;
+}
+.inf-evo-filter-btn {
+  padding: 5px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--label-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.inf-evo-filter-btn:hover {
+  color: var(--label);
+  background: rgba(255, 255, 255, 0.06);
+}
+.inf-evo-filter-btn.active {
+  color: #fff;
+  background: var(--pmi-blue);
+  box-shadow: 0 1px 4px rgba(0, 156, 222, 0.3);
+}
+
+/* Description */
+.inf-evo-desc {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--label-tertiary);
+  margin: 0 0 14px;
+  max-width: 680px;
+}
+
+/* Legend */
+.inf-evo-legend {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--separator);
+}
+.inf-evo-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--label-secondary);
+}
+.inf-evo-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: none;
+}
+.inf-evo-legend-dot.net { background: #1b3a5c; }
+.inf-evo-legend-dot.offset { background: #3a8fc2; }
+.inf-evo-legend-dot.total { background: #a78bfa; }
+
+/* ============================================================
+   Content: rows left (~60%), line chart right (~40%)
+   ============================================================ */
+.inf-evo-content {
+  display: flex;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.inf-evo-rows {
+  flex: 3;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ============================================================
+   Year Row
+   ============================================================ */
+.inf-evo-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 14px;
+  border-radius: 10px;
+}
+.inf-evo-row + .inf-evo-row {
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+.inf-evo-row.selected {
+  background: rgba(0, 156, 222, 0.04);
+  border-left: 3px solid var(--pmi-blue, #009cde);
+  padding-left: 11px;
+}
+.inf-evo-row.selected + .inf-evo-row {
+  border-top-color: transparent;
+}
+
+/* Top part: year label + bars */
+.inf-evo-row-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Year column */
+.inf-evo-year-col {
+  flex: none;
+  width: 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.inf-evo-year {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--label);
+  line-height: 1.2;
+}
+.inf-evo-when {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--label-tertiary);
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   Two bars: Net (longer) + Offset (shorter) side by side
+   ============================================================ */
+.inf-evo-bars-wrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.inf-evo-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 20px;
+}
+
+.inf-evo-bar {
+  height: 100%;
+  border-radius: 4px;
+  min-width: 0;
+  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.inf-evo-bar.net { background: #1b3a5c; }
+.inf-evo-bar.offset { background: #3a8fc2; }
+
+/* Zero state — no inflation exposure */
+.inf-evo-zero-state {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  border-radius: 6px;
+  background: rgba(34, 197, 94, 0.06);
+  border: 1px solid rgba(34, 197, 94, 0.15);
+}
+.inf-evo-zero-text {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(34, 197, 94, 0.7);
+  letter-spacing: 0.01em;
+}
+
+/* ============================================================
+   Gross min-max range line (thin bar below the main bars)
+   ============================================================ */
+.inf-evo-range-line {
+  margin-top: 6px;
+  height: 4px;
+  width: 100%;
+}
+
+.inf-evo-range-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+  overflow: visible;
+}
+
+/* Small colored bands clustered at the marker position */
+.inf-evo-range-gradient {
+  position: absolute;
+  top: 0;
+  width: 16%;
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #22c55e, #eab308, #ef4444);
+}
+
+.inf-evo-range-band { display: none; }
+
+/* White vertical marker line */
+.inf-evo-range-marker-line {
+  position: absolute;
+  top: -2px;
+  width: 2px;
+  height: calc(100% + 4px);
+  background: #fff;
+  border-radius: 1px;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+/* Legacy — unused */
+.inf-evo-range-seg { display: none; }
+.inf-evo-range-fill { display: none; }
+.inf-evo-range-marker { display: none; }
+
+/* ============================================================
+   Metrics: Net $X + Offset $Y = Gross $Z
+   With Min-Max range below each value
+   ============================================================ */
+.inf-evo-metrics {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: nowrap;
+  padding-left: 0;
+}
+
+.inf-evo-metric-op {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.35);
+  align-self: center;
+  flex: none;
+  margin: 0 10px;
+}
+
+.inf-evo-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+}
+.inf-evo-metric-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--label-tertiary);
+  line-height: 1.3;
+}
+.inf-evo-metric-value {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--label);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+.inf-evo-metric-value strong {
+  font-weight: 600;
+  color: var(--label-secondary);
+  font-size: 12px;
+  margin-right: 2px;
+}
+.inf-evo-metric-range {
+  font-size: 9.5px;
+  font-weight: 500;
+  color: var(--label-tertiary);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  line-height: 1.3;
+}
+
+/* Tooltip icon (ⓘ) with custom popup */
+.inf-evo-tooltip-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+.inf-evo-tooltip-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  font-size: 11px;
+  color: var(--label-tertiary);
+  cursor: pointer;
+  margin-left: 3px;
+  opacity: 0.6;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+.inf-evo-tooltip-icon:hover {
+  opacity: 1;
+  color: var(--label);
+}
+.inf-evo-tooltip-popup {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--grouped-bg-secondary, #1a2332);
+  border: 1px solid var(--separator, rgba(255,255,255,0.12));
+  border-radius: 8px;
+  padding: 10px 14px;
+  white-space: nowrap;
+  z-index: 100;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  font-size: 12px;
+  color: var(--label);
+  line-height: 1.4;
+}
+.inf-evo-tooltip-popup .inf-evo-tooltip-title {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--pmi-blue, #009cde);
+  margin-bottom: 3px;
+}
+.inf-evo-tooltip-wrap:hover .inf-evo-tooltip-popup {
+  display: block;
+}
+
+/* Highlighted metric (when filter active) */
+.inf-evo-metric.highlighted {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 4px 8px;
+}
+.inf-evo-metric.highlighted.net {
+  border-color: rgba(48, 209, 88, 0.35);
+  background: rgba(48, 209, 88, 0.06);
+}
+.inf-evo-metric.highlighted.net .inf-evo-metric-value { color: #30d158; }
+.inf-evo-metric.highlighted.offset {
+  border-color: rgba(58, 143, 194, 0.4);
+  background: rgba(58, 143, 194, 0.08);
+}
+.inf-evo-metric.highlighted.offset .inf-evo-metric-value { color: #3a8fc2; }
+.inf-evo-metric.highlighted.gross {
+  border-color: rgba(239, 68, 68, 0.35);
+  background: rgba(239, 68, 68, 0.06);
+}
+.inf-evo-metric.highlighted.gross .inf-evo-metric-value { color: #ef4444; }
+
+/* ============================================================
+   Line chart — right side
+   ============================================================ */
+.inf-evo-linechart {
+  flex: 2;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.inf-evo-linechart-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  margin-bottom: 8px;
+}
+.inf-evo-linechart-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--label-tertiary);
+  text-align: center;
+}
+.inf-evo-linechart-sub {
+  font-size: 9px;
+  color: var(--label-tertiary);
+}
+.inf-evo-linechart-svg {
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+  display: block;
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 900px) {
+  .inf-evo-content {
+    flex-direction: column;
+  }
+  .inf-evo-linechart {
+    width: 100%;
+    max-width: 300px;
+    margin: 16px auto 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .inf-evo-card { padding: 18px 16px 16px; }
+  .inf-evo-row-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .inf-evo-year-col {
+    width: auto;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .inf-evo-metrics {
+    padding-left: 0;
+    flex-wrap: wrap;
+  }
+  .inf-evo-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}

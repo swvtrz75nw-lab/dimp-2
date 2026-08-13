@@ -1,0 +1,91 @@
+/* pages.css — page shell, stat/info cards, history rows, notifications page */
+/* ============================================================
+   Generic page shell (Home / domain / platform / history)
+   ============================================================ */
+.page { height: 100vh; overflow-y: auto; }
+.page-inner { max-width: 1080px; margin: 0 auto; padding: 40px 40px 80px; }
+.page-head { margin-bottom: 28px; }
+.page-kicker { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--pmi-blue); margin-bottom: 8px; }
+.page-title { font-family: var(--font-display); font-size: 34px; font-weight: 700; letter-spacing: -0.025em; margin: 0 0 6px; }
+.page-sub { font-size: 15px; color: var(--label-secondary); max-width: 620px; line-height: 1.5; }
+
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+.info-card { padding: 20px; border-radius: 20px; background: var(--glass-thin-bg); backdrop-filter: var(--glass-blur-thin); -webkit-backdrop-filter: var(--glass-blur-thin);
+  box-shadow: inset 0 0 0 0.5px var(--glass-hairline); transition: transform var(--dur-fast) var(--ease-spring); }
+.info-card:hover { transform: translateY(-3px); }
+.info-card .ic-ic { width: 44px; height: 44px; border-radius: 13px; display: grid; place-items: center; color: #fff; margin-bottom: 14px; }
+.info-card .ic-label { font-size: 12.5px; color: var(--label-secondary); font-weight: 600; }
+.info-card .ic-value { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; margin: 4px 0; font-variant-numeric: tabular-nums; }
+.info-card .ic-delta { font-size: 12.5px; font-weight: 600; }
+.info-card .ic-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.info-card .ic-desc { font-size: 13px; color: var(--label-secondary); line-height: 1.45; }
+.info-card.clickable { cursor: pointer; text-align: left; width: 100%; }
+
+/* Light mode: override inline dark backgrounds on homepage domain cards */
+.theme-light-root .card-grid .info-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06), inset 0 0 0 0.5px rgba(0, 0, 0, 0.06);
+}
+.theme-light-root .card-grid .info-card > div:last-child {
+  border-top-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.section-title { font-size: 18px; font-weight: 700; margin: 34px 0 14px; letter-spacing: -0.01em; }
+
+.history-item { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 16px; margin-bottom: 10px; width: 100%; text-align: left;
+  background: var(--glass-thin-bg); backdrop-filter: var(--glass-blur-thin); -webkit-backdrop-filter: var(--glass-blur-thin);
+  box-shadow: inset 0 0 0 0.5px var(--glass-hairline); transition: transform var(--dur-fast) var(--ease-spring); }
+.history-item:hover { transform: translateY(-1px); }
+.history-item .hi-ic { width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; color: var(--pmi-blue); background: var(--pmi-blue-soft); flex: none; }
+.history-item .hi-title { font-size: 14.5px; font-weight: 600; }
+.history-item .hi-meta { font-size: 12.5px; color: var(--label-secondary); margin-top: 2px; }
+
+/* notifications full page */
+.np-toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+.seg { display: flex; gap: 3px; padding: 3px; border-radius: 999px; background: var(--glass-thin-bg); box-shadow: inset 0 0 0 0.5px var(--glass-hairline); }
+.seg button { padding: 7px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--label-secondary); }
+.seg button.active { background: var(--glass-thick-bg); color: var(--label); box-shadow: inset 0 0 0 0.5px var(--glass-hairline); }
+
+
+
+/* ─── Recent Activity ─────────────────────────────────────── */
+.ra-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--grouped-bg-secondary);
+  border-radius: 18px;
+  padding: 16px 20px;
+  box-shadow: inset 0 0 0 0.5px var(--separator);
+  margin-bottom: 24px;
+}
+.ra-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--separator);
+}
+.ra-item:last-child { border-bottom: none; }
+.ra-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  flex: none;
+}
+.ra-content { flex: 1; min-width: 0; }
+.ra-text {
+  font-size: 14px;
+  color: var(--label);
+  line-height: 1.4;
+}
+.ra-text b { font-weight: 700; }
+.ra-meta {
+  font-size: 12px;
+  color: var(--label-tertiary);
+  margin-top: 3px;
+}
